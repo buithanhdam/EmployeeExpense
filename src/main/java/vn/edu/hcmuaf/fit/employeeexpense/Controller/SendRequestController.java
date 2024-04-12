@@ -25,12 +25,17 @@ public class SendRequestController {
                                 @RequestParam("filename") String filename,
                                 HttpSession session) {
         // Create ExpenseRequest object
-        ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),(Employee) session.getAttribute("user"), "Requested");
+        Employee employee = (Employee) session.getAttribute("user");
+        if (employee==null){
+            return "redirect:/";
+        }
+        ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, "Requested");
 
         // Save ExpenseRequest
         expenseRequestRepository.save(expenseRequest);
 
         // Redirect to a success page or return the view name
-        return "redirect:/success"; // Redirect to a success page
+        return "redirect:/home"; // Redirect to a success page
     }
+    
 }
