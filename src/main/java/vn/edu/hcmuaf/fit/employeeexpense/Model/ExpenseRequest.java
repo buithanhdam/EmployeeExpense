@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "statistics")
+@Table(name = "expense_request")
 @Data
 public class ExpenseRequest implements Serializable {
     @Id
@@ -17,7 +17,7 @@ public class ExpenseRequest implements Serializable {
     private Long requestId;
     @Column(name = "type")
     private String type;
-    @Column(name = "decription")
+    @Column(name = "description")
     private String decription;
     @Column(name = "amount")
     private float amount;
