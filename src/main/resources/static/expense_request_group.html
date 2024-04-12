@@ -54,17 +54,21 @@
 <body>
 
 
+
 <h2>EXPENSE REQUEST FOR MANAGER</h2>
 
 <form action="/sendrequest/create" method="post" enctype="multipart/form-data">
     <!-- Combobox -->
     <label for="category">Type:</label>
-    <select id="category" name="type">
 
-        <option value="loai1" disabled>Personal</option>
-        <option value="loai2" selected>Group</option>
+    <select id="category" name="category">
+        <option value="group" selected>Group</option>
+
 
     </select>
+    <label for="amount">Amount:</label>
+    <textarea id="amount" name="amount" rows="2" cols="50" placeholder="" oninput="checkInput()"></textarea>
+    <div id="error-message" class="error" style="color: red"></div>
 
     <label for="amount">Amount:</label>
     <textarea id="amount" name="amount" rows="2" cols="50" placeholder="" oninput="checkInput()"></textarea>
@@ -81,11 +85,16 @@
 
     <input type="file" id="file" name="filename" onchange="checkFileSize()">
     <input type="text" style="display: none" name="employee" id="employee" >
+
     <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
     <input type="submit" value="Submit">
+    <div style="margin-top: 20px">
+        <a href="" style="color: black">History request</a>
+    </div>
 </form>
 <script>
+
     // Lấy đối tượng nhân viên từ local storage
     const employee = JSON.parse(localStorage.getItem("user"));
 
@@ -103,6 +112,7 @@
     } else {
         console.log("Không tìm thấy nhân viên trong local storage.");
     }
+
     function checkInput() {
 
         // Lấy giá trị của textarea
@@ -146,7 +156,9 @@
 
     // Hàm định dạng số với phân tách đơn vị số
 
-</script>
 
+
+
+</script>
 </body>
 </html>

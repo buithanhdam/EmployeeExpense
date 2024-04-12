@@ -56,12 +56,12 @@
 
 <h2>EXPENSE REQUEST FOR EMPLOYEE</h2>
 
-<form action="http://localhost:8080/sendrequest/create" method="post" enctype="multipart/form-data">
+<form action="/send-request/create" method="post" enctype="multipart/form-data">
     <!-- Combobox -->
     <label for="category">Type:</label>
     <select id="category" name="type">
-        <option value="loai1" selected>Personal</option>
-        <option value="loai2" disabled>Group</option>
+        <option value="personal" selected>Personal</option>
+
     </select>
     <label for="amount">Amount:</label>
     <textarea id="amount" name="amount" rows="2" cols="50" placeholder="" oninput="checkInput()"></textarea>
@@ -77,11 +77,15 @@
     <label for="file">File:</label>
 
     <input type="file" id="file" name="filename" onchange="checkFileSize()">
-    <input type="text" style="display: none" name="employee" id="employee" >
+  <input type="text" style="display: none" name="employee" id="employee" >
     <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
     <input type="submit" value="Submit" >
+    <div style="margin-top: 20px">
+        <a href="" style="color: black">History request</a>
+    </div>
 </form>
+
 <script>
 
         // Lấy đối tượng nhân viên từ local storage
@@ -142,6 +146,7 @@
             }
 
     }
+
 
 
 
