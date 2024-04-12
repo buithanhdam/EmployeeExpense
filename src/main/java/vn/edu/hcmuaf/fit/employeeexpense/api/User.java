@@ -51,7 +51,7 @@ public class User {
     }
 
     @PostMapping(value = "/loginWithOtp")
-    public ResponseEntity<?> userLogin(@RequestParam(value = "email") String email,@RequestParam("otp") String otp){
+    public ResponseEntity<?> userLogin(@RequestParam("email") String email,@RequestParam("otp") String otp){
         // check email
         //accountantRepository.findOneByEmail(email);
         Employee employee = employeeRepository.findOneByEmail(email);

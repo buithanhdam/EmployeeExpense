@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with Gmail and OTP</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="loader" ></div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+
+                    <h2 class="card-title text-center mb-4">Login</h2>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="gmail" placeholder="Gmail" required>
+                        </div>
+                        <div class="form-group" id="sentOtpField" style="display: none;">
+                            <input type="text" class="form-control" id="sentOtp" placeholder="Sent OTP" readonly>
+                        </div>
+                        <div class="form-group" id="otpField" style="display: none;">
+                            <input type="text" class="form-control" id="otp" placeholder="Enter OTP" required>
+                        </div>
+                        <button type="button" id="sendOtpBtn" class="btn btn-primary btn-block">Send OTP</button>
+                        <button  type="button" id="loginBtn" class="btn btn-primary btn-block" style="display: none;">Login</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+    $('#sendOtpBtn').click(function() {
+        //console.log( $("#gmail").val());
+        let email = $("#gmail").val();
+        localStorage.setItem("email", email);
+        $.ajax({
+            url: 'http://localhost:8080/api/user/sendOTP',
+            type: 'POST',
+            data: {
+                email: email
+            },
+            success: function(response) {
+
+                document.getElementById('otpField').style.display = 'block';
+                document.getElementById('gmail').style.display = 'none';
+                document.getElementById('sendOtpBtn').style.display = 'none';
+                document.getElementById('loginBtn').style.display = 'block';
+
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                // Handle the error if the request fails
+                console.error(error);
+            }
+        });
+    });
+
+    $('#loginBtn').click(function(e) {
+        console.log( localStorage.getItem("email"));
+        let otp = $("#otp").val()
+        console.log( otp);
+
+        e.preventDefault();
+        $.ajax({
+            url: 'http://localhost:8080/api/user/loginWithOtp',
+            type: 'POST',
+            data: {
+                email: localStorage.getItem("email"),
+                otp : otp
+            },
+            success: function(response) {
+                window.location.href="home.html";
+                localStorage.setItem("user",JSON.stringify(response));
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                // Handle the error if the request fails
+                console.error(error);
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>
