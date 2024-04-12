@@ -16,6 +16,4 @@ public class Department implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "manager_id")
-    private int manager_id;
 }
