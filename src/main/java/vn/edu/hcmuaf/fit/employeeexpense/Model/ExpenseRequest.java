@@ -9,7 +9,9 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
+
 @Table(name = "expense_request")
+
 @Data
 public class ExpenseRequest implements Serializable {
     @Id

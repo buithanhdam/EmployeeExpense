@@ -34,7 +34,9 @@
             display: block;
             width: 100%;
             padding: 10px;
+
             background-color: #007bff;
+
             color: white;
             border: none;
             border-radius: 4px;
@@ -43,11 +45,14 @@
 
         /* CSS cho nút gửi khi di chuột vào */
         input[type="submit"]:hover {
+
             background-color: #0056b3;
+
         }
     </style>
 </head>
 <body>
+
 
 <h2>EXPENSE REQUEST FOR EMPLOYEE</h2>
 
@@ -64,11 +69,13 @@
 
     <!-- Text Field mô tả -->
 
+
     <label for="description">Description:</label>
     <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your descroption..."></textarea>
 
     <!-- Tệp đính kèm -->
     <label for="file">File:</label>
+
     <input type="file" id="file" name="filename" onchange="checkFileSize()">
     <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
@@ -119,5 +126,6 @@
 
 
 </script>
+
 </body>
 </html>

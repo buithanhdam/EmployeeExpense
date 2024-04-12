@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "mailer")
+@Table(name = "ExpenseApproval")
 @Data
 public class ExpenseApproval implements Serializable {
     @Id

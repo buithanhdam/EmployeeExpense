@@ -34,7 +34,9 @@
             display: block;
             width: 100%;
             padding: 10px;
+
             background-color: #007bff;
+
             color: white;
             border: none;
             border-radius: 4px;
@@ -43,11 +45,14 @@
 
         /* CSS cho nút gửi khi di chuột vào */
         input[type="submit"]:hover {
+
             background-color: #0056b3;
+
         }
     </style>
 </head>
 <body>
+
 
 <h2>EXPENSE REQUEST FOR MANAGER</h2>
 
@@ -55,21 +60,25 @@
     <!-- Combobox -->
     <label for="category">Type:</label>
     <select id="category" name="type">
+
         <option value="loai1" disabled>Personal</option>
         <option value="loai2" selected>Group</option>
 
     </select>
+
     <label for="amount">Amount:</label>
     <textarea id="amount" name="amount" rows="2" cols="50" placeholder="" oninput="checkInput()"></textarea>
     <div id="error-message" class="error" style="color: red"></div>
 
     <!-- Text Field mô tả -->
 
+
     <label for="description">Description:</label>
     <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your descroption..."></textarea>
 
     <!-- Tệp đính kèm -->
     <label for="file">File:</label>
+
     <input type="file" id="file" name="filename" onchange="checkFileSize()">
     <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
@@ -120,5 +129,6 @@
     // Hàm định dạng số với phân tách đơn vị số
 
 </script>
+
 </body>
 </html>
