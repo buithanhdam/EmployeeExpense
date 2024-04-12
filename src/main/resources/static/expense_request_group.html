@@ -34,7 +34,7 @@
             display: block;
             width: 100%;
             padding: 10px;
-            background-color: #4CAF50;
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
@@ -43,34 +43,84 @@
 
         /* CSS cho nút gửi khi di chuột vào */
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 
-<h2>EXPENSE REQUEST</h2>
+<h2>EXPENSE REQUEST FOR MANAGER</h2>
 
 <form action="/submit" method="post" enctype="multipart/form-data">
     <!-- Combobox -->
     <label for="category">Type:</label>
     <select id="category" name="category">
-        <option value="loai1" disabled>Personal</option>
-        <option value="loai2" selected>Group</option>
+        <option value="group" selected>Group</option>
 
     </select>
+    <label for="amount">Amount:</label>
+    <textarea id="amount" name="amount" rows="2" cols="50" placeholder="" oninput="checkInput()"></textarea>
+    <div id="error-message" class="error" style="color: red"></div>
 
     <!-- Text Field mô tả -->
+
     <label for="description">Description:</label>
     <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your descroption..."></textarea>
 
     <!-- Tệp đính kèm -->
     <label for="file">File:</label>
-    <input type="file" id="file" name="file">
-
+    <input type="file" id="file" name="file" onchange="checkFileSize()">
+    <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
     <input type="submit" value="Submit">
+    <div style="margin-top: 20px">
+        <a href="" style="color: black">History request</a>
+    </div>
 </form>
+<script>
+    function checkInput() {
 
+        // Lấy giá trị của textarea
+        const input = document.getElementById('amount').value;
+
+        // Biểu thức chính quy để kiểm tra xem chuỗi có phải là chữ số hay không
+        const regex = /^[0-9]+$/;
+
+        // Kiểm tra chuỗi nhập vào
+        if (regex.test(input) & input > 1000 & input <= 1000000000) {
+            // Nếu chuỗi chỉ chứa các chữ số
+            document.getElementById('error-message').innerText = '';
+        } else {
+            // Nếu chuỗi không chỉ chứa các chữ số
+            document.getElementById('error-message').innerText = 'input must number and 1,000<input<1,000,000,000!';
+        }}
+</script>
+
+<script>
+    function checkFileSize() {
+        const fileInput = document.getElementById('file');
+        const file = fileInput.files[0]; // Lấy tệp đầu tiên được chọn
+
+        // Giới hạn kích thước tối đa là 10MB
+        const maxFileSize = 10 * 1024 * 1024; // 10MB trong bytes
+
+        // Kiểm tra kích thước của tệp
+        if (file && file.size > maxFileSize) {
+            // Nếu tệp quá lớn, hiển thị thông báo lỗi
+            document.getElementById('error-message-file').innerText =
+                'The file is too large, please choose a file smaller than 10MB.';
+
+            // Đặt giá trị của input file về rỗng để người dùng có thể chọn tệp khác
+            fileInput.value = '';
+        } else {
+            // Nếu kích thước tệp hợp lệ, xóa thông báo lỗi
+            document.getElementById('error-message-file').innerText = '';
+        }
+
+    }
+
+    // Hàm định dạng số với phân tách đơn vị số
+
+</script>
 </body>
 </html>
