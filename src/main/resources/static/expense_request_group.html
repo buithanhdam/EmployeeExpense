@@ -80,11 +80,29 @@
     <label for="file">File:</label>
 
     <input type="file" id="file" name="filename" onchange="checkFileSize()">
+    <input type="text" style="display: none" name="employee" id="employee" >
     <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
     <input type="submit" value="Submit">
 </form>
 <script>
+    // Lấy đối tượng nhân viên từ local storage
+    const employee = JSON.parse(localStorage.getItem("user"));
+
+    // Kiểm tra xem có nhân viên hay không
+    if (employee) {
+        // Tìm phần tử input có id là "employee"
+        const inputEmployee = document.getElementById("employee");
+
+        // Gán giá trị của thuộc tính "name" của nhân viên vào inputEmployee
+        inputEmployee.value = employee.employeeId; // Thay "name" bằng tên thuộc tính bạn muốn hiển thị
+
+        // Log nhân viên ra console (tạm thời để kiểm tra)
+        console.log(employee);
+
+    } else {
+        console.log("Không tìm thấy nhân viên trong local storage.");
+    }
     function checkInput() {
 
         // Lấy giá trị của textarea

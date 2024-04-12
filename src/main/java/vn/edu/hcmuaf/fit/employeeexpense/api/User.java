@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.employeeexpense.API;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,7 @@ public class User {
     @Autowired
     private UserDTO userDTO;
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(value = "/sendOTP")
     public ResponseEntity<?> userOTP(@RequestParam("email") String email){
         // check email
@@ -51,8 +53,9 @@ public class User {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(value = "/loginWithOtp")
-    public ResponseEntity<?> userLogin(@RequestParam("email") String email,@RequestParam("otp") String otp){
+    public ResponseEntity<?> userLogin(@RequestParam("email") String email, @RequestParam("otp") String otp, HttpSession session){
         // check email
         //accountantRepository.findOneByEmail(email);
         Employee employee = employeeRepository.findOneByEmail(email);
@@ -60,6 +63,7 @@ public class User {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("user not found");
         }
         if(employee.getOtp().equals(otp)){
+            session.setAttribute("user",employee);
             return ResponseEntity.ok(userDTO.toDto(employee));
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("otp not found");

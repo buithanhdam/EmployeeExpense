@@ -30,7 +30,7 @@ EmployeeRepository employeeRepository;
 
 @Autowired
 ExpenseApprovalRepository expenseApprovalRepository;
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/getSubmitRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getRequetsOnSubmit(@PathVariable Long id) {
         try{
@@ -45,6 +45,7 @@ ExpenseApprovalRepository expenseApprovalRepository;
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/getConfirmRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getRequetsOnConfirm(@PathVariable Long id) {
         try{
@@ -59,6 +60,7 @@ ExpenseApprovalRepository expenseApprovalRepository;
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/getRejectRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getRequetsOnReject(@PathVariable Long id) {
         try{
@@ -73,7 +75,7 @@ ExpenseApprovalRepository expenseApprovalRepository;
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping("/confirmRequest")
     public ResponseEntity<ExpenseRequest> confirmRequest(@RequestParam Long request_id, @RequestParam Long manager_id){
         try {
@@ -104,7 +106,7 @@ ExpenseApprovalRepository expenseApprovalRepository;
         }
         return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
     }
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping("/rejectRequest")
     public ResponseEntity<ExpenseRequest> rejectRequest(@RequestParam Long request_id, @RequestParam Long manager_id,@RequestParam String reason){
         try {
