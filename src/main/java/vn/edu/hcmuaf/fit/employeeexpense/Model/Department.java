@@ -10,10 +10,14 @@ import java.io.Serializable;
 @Data
 public class Department implements Serializable {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long departmentId;
     @Column(name = "name")
     private String name;
+
+    @Column(name = "manager_id")
+    private int manager_id;
 
 }

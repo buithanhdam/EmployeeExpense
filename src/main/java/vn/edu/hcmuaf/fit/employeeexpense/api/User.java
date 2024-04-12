@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.employeeexpense.api;
+package vn.edu.hcmuaf.fit.employeeexpense.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;

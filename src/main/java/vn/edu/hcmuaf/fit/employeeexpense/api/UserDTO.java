@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.employeeexpense.api;
+package vn.edu.hcmuaf.fit.employeeexpense.API;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
