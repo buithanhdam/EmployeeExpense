@@ -14,6 +14,7 @@ import vn.edu.hcmuaf.fit.employeeexpense.Repository.EmployeeRepository;
 import vn.edu.hcmuaf.fit.employeeexpense.service.OtpGenerator;
 
 @RestController
+@CrossOrigin(maxAge = 3600)
 @RequestMapping(value = "/api/user")
 public class User {
 
