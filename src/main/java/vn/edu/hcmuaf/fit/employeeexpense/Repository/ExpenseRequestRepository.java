@@ -6,6 +6,7 @@ import vn.edu.hcmuaf.fit.employeeexpense.Model.Employee;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.ExpenseApproval;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.ExpenseRequest;
 
+
 import java.util.List;
 
 @Repository
@@ -13,6 +14,7 @@ public interface ExpenseRequestRepository extends JpaRepository<ExpenseRequest, 
 
     List<ExpenseRequest> findAllByEmployee(Employee e);
     ExpenseRequest findByRequestId(Long id);
+
 
 
 
