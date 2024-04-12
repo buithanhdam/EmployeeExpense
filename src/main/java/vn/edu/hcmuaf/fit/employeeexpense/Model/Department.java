@@ -15,7 +15,8 @@ public class Department implements Serializable {
     private Long departmentId;
     @Column(name = "name")
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
-    private Employee manager;
+
+//    @ManyToOne
+//    @JoinColumn(name = "manager_id")
+//    private Employee manager;
 }
