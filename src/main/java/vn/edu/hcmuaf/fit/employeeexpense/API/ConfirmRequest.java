@@ -79,18 +79,21 @@ ExpenseApprovalRepository expenseApprovalRepository;
         try {
             ExpenseRequest expenseRequest = expenseRequestRepository.findByRequestId(request_id);
             if (expenseRequest != null){
-                if (expenseRequest.getStatus().equals("Submit")){
-                    expenseRequest.setStatus("Confirm");
-                    expenseRequestRepository.save(expenseRequest);
+                Department department = expenseRequest.getEmployee().getDepartment();
+                if (department.getManager_id()==manager_id) {
+                    if (expenseRequest.getStatus().equals("Submit")) {
+                        expenseRequest.setStatus("Confirm");
+                        expenseRequestRepository.save(expenseRequest);
 
-                    ExpenseApproval expenseApproval = new ExpenseApproval();
-                    expenseApproval.setExpenseRequest(expenseRequest);
-                    expenseApproval.setStatus("Confirm");
-                    expenseApproval.setApprovedAt(new Timestamp(new Date().getTime()));
-                    expenseApproval.setEmployee(employeeRepository.findByEmployeeId(manager_id));
-                    expenseApprovalRepository.save(expenseApproval);
+                        ExpenseApproval expenseApproval = new ExpenseApproval();
+                        expenseApproval.setExpenseRequest(expenseRequest);
+                        expenseApproval.setStatus("Confirm");
+                        expenseApproval.setApprovedAt(new Timestamp(new Date().getTime()));
+                        expenseApproval.setEmployee(employeeRepository.findByEmployeeId(manager_id));
+                        expenseApprovalRepository.save(expenseApproval);
 
-                    return new ResponseEntity<>(expenseRequest,HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity<>(expenseRequest, HttpStatus.BAD_REQUEST);
+                    }
                 }
             }else {
                 return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
@@ -107,24 +110,29 @@ ExpenseApprovalRepository expenseApprovalRepository;
         try {
             ExpenseRequest expenseRequest = expenseRequestRepository.findByRequestId(request_id);
             if (expenseRequest != null){
-                if (!expenseRequest.getStatus().equals("Approve")){
-                    expenseRequest.setStatus("Reject");
-                    expenseRequest.setRejection_reason(reason);
-                    expenseRequestRepository.save(expenseRequest);
+                Department department = expenseRequest.getEmployee().getDepartment();
+                if (department.getManager_id()==manager_id){
+                    if (!expenseRequest.getStatus().equals("Approve")){
+                        expenseRequest.setStatus("Reject");
+                        expenseRequest.setRejection_reason(reason);
+                        expenseRequestRepository.save(expenseRequest);
 
-                    ExpenseApproval expenseApproval = expenseApprovalRepository.findByExpenseRequest(expenseRequest);
-                    if (expenseApproval == null){
-                        expenseApproval = new ExpenseApproval();
-                        expenseApproval.setExpenseRequest(expenseRequest);
-                        expenseApproval.setApprovedAt(new Timestamp(new Date().getTime()));
-                        expenseApproval.setEmployee(employeeRepository.findByEmployeeId(manager_id));
+                        ExpenseApproval expenseApproval = expenseApprovalRepository.findByExpenseRequest(expenseRequest);
+                        if (expenseApproval == null){
+                            expenseApproval = new ExpenseApproval();
+                            expenseApproval.setExpenseRequest(expenseRequest);
+                            expenseApproval.setApprovedAt(new Timestamp(new Date().getTime()));
+                            expenseApproval.setEmployee(employeeRepository.findByEmployeeId(manager_id));
+                        }
+                        expenseApproval.setRejection_reason(reason);
+                        expenseApproval.setStatus("Reject");
+                        expenseApprovalRepository.save(expenseApproval);
+
+                        return new ResponseEntity<>(expenseRequest,HttpStatus.BAD_REQUEST);
                     }
-                    expenseApproval.setRejection_reason(reason);
-                    expenseApproval.setStatus("Reject");
-                    expenseApprovalRepository.save(expenseApproval);
-
-                    return new ResponseEntity<>(expenseRequest,HttpStatus.BAD_REQUEST);
                 }
+
+
             }else {
                 return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
             }
