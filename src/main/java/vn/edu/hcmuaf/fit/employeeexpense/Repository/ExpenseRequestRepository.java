@@ -6,7 +6,7 @@ import vn.edu.hcmuaf.fit.employeeexpense.Model.ExpenseApproval;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.ExpenseRequest;
 
 @Repository
-public interface ExpenseRequestRepository extends JpaRepository<ExpenseRequest, Integer> {
+public interface ExpenseRequestRepository extends JpaRepository<ExpenseRequest, Long> {
 
 
 }

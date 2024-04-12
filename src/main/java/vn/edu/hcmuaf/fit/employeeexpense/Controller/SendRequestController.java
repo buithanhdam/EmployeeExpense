@@ -3,39 +3,64 @@ package vn.edu.hcmuaf.fit.employeeexpense.Controller;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.Employee;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.ExpenseRequest;
+import vn.edu.hcmuaf.fit.employeeexpense.Repository.EmployeeRepository;
 import vn.edu.hcmuaf.fit.employeeexpense.Repository.ExpenseRequestRepository;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 
 @Controller
-@RequestMapping("/send-request")
+@RequestMapping("/sendrequest")
 public class SendRequestController {
     @Autowired
     private ExpenseRequestRepository expenseRequestRepository;
-
+    @Autowired
+    private EmployeeRepository emrepo;
     @PostMapping("/create")
     public String createRequest(@RequestParam("type") String type,
                                 @RequestParam("description") String description,
                                 @RequestParam("amount") float amount,
-                                @RequestParam("filename") String filename,
+                                @RequestParam("filename") MultipartFile file,
                                 HttpSession session) {
         // Create ExpenseRequest object
         Employee employee = (Employee) session.getAttribute("user");
+//        Employee employee = emrepo.getOne(1);
         if (employee==null){
-            return "redirect:/";
+            return "redirect:/login";
         }
+
+        String filename = "";
+        if (!file.isEmpty()) {
+            try {
+                // Lưu file vào thư mục trên máy chủ
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get("src\\main\\resources\\files\\"+ file.getOriginalFilename());
+                System.out.println(file.getResource());
+                Files.write(path, bytes);
+
+                // Lấy đường dẫn tuyệt đối của file
+                String filePath = path.toString();
+                filename = filePath;
+                // Tiếp tục xử lý và lưu thông tin vào cơ sở dữ liệu
+                // ...
+            } catch (Exception e) {
+            }
+        }
+
         ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, "Requested");
 
         // Save ExpenseRequest
         expenseRequestRepository.save(expenseRequest);
 
         // Redirect to a success page or return the view name
-        return "redirect:/home"; // Redirect to a success page
+        return "redirect:/expense_request_group.html"; // Redirect to a success page
     }
-    
+
+
 }

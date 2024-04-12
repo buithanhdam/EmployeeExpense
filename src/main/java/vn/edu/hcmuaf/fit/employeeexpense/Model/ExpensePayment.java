@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user")
+@Table(name = "expense_payment")
 @Data
 public class ExpensePayment implements Serializable {
     @Id
