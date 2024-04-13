@@ -2,7 +2,7 @@ package vn.edu.hcmuaf.fit.employeeexpense.Model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import java.sql.Timestamp;
 import java.io.Serializable;
 
 @Entity
@@ -20,4 +20,6 @@ public class ExpensePayment implements Serializable {
     @ManyToOne
     @JoinColumn(name = "paid_by")
     private Accountant accountant;
+    @Column(name = "paid_at")
+    private Timestamp paidAt;
 }
