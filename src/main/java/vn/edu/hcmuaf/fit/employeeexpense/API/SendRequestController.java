@@ -6,21 +6,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.Employee;
+import vn.edu.hcmuaf.fit.employeeexpense.Model.ExpenseApproval;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.ExpenseRequest;
 import vn.edu.hcmuaf.fit.employeeexpense.Repository.EmployeeRepository;
+import vn.edu.hcmuaf.fit.employeeexpense.Repository.ExpenseApprovalRepository;
 import vn.edu.hcmuaf.fit.employeeexpense.Repository.ExpenseRequestRepository;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/sendrequest")
 public class SendRequestController {
     @Autowired
     private ExpenseRequestRepository expenseRequestRepository;
-
+    @Autowired
+    ExpenseApprovalRepository expenseApprovalRepository;
     @Autowired
     EmployeeRepository employeeRepository;
     @CrossOrigin(origins = "http://localhost:63342")
@@ -35,7 +39,7 @@ public class SendRequestController {
         Employee employee = employeeRepository.findByEmployeeId(Long.parseLong(id));
 //        Employee employee = emrepo.getOne(1);
         if (employee==null){
-            return "redirect:./login.html";
+            return "redirect:http://localhost:63342/EmployeeExpense/static/login.html";
         }
 
         String filename = "";
@@ -55,20 +59,27 @@ public class SendRequestController {
             } catch (Exception e) {
             }
         }
-        String status = "Submit";
-        if (employee.getIsManager() == 1){
-             status = "Confirm";
-        }
-        ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, status);
 
         // Save ExpenseRequest
-        expenseRequestRepository.save(expenseRequest);
 
+        String status = "Submit";
         // Redirect to a success page or return the view name
         if (employee.getIsManager()==1){
-            return "redirect:./expense_request_group.html"; // Redirect to a success page
+            status = "Confirm";
+            ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, status);
+
+            expenseRequestRepository.save(expenseRequest);
+            ExpenseApproval expenseApproval = new ExpenseApproval();
+            expenseApproval.setExpenseRequest(expenseRequest);
+            expenseApproval.setApprovedAt(new Timestamp(new Date().getTime()));
+            expenseApproval.setEmployee(employee);
+            expenseApproval.setStatus("Confirm");
+            expenseApprovalRepository.save(expenseApproval);
+            return "redirect:http://localhost:63342/EmployeeExpense/static/expense_request_group.html"; // Redirect to a success page
         }else{
-            return "redirect:./expense_request_personal.html"; // Redirect to a success page
+            ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, status);
+            expenseRequestRepository.save(expenseRequest);
+            return "redirect:http://localhost:63342/EmployeeExpense/static/expense_request_personal.html"; // Redirect to a success page
         }
 
     }
