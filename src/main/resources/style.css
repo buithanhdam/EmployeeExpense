@@ -36,16 +36,36 @@ button:hover {
     background-color: #0056b3;
 }
 
-.loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+
+.lds-dual-ring,
+.lds-dual-ring:after {
+    box-sizing: border-box;
+}
+.lds-dual-ring {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.lds-dual-ring:after {
+    color: #073d7d;
+    content: " ";
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin: 8px;
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
+    border: 6.4px solid currentColor;
+    border-color: currentColor transparent currentColor transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+
+
