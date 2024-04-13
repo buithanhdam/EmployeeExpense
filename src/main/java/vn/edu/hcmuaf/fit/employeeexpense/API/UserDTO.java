@@ -34,7 +34,7 @@ public class UserDTO {
         result.setId(accountant.getAccountantId());
         result.setEmail(accountant.getEmail());
         result.setName(accountant.getName());
-        result.setRole(3);
+        result.setRole(2);
         return result;
     }
 
