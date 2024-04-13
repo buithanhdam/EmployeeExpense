@@ -70,7 +70,7 @@
 <body>
 
 <div id="right-panel">
-    <h3>Employee Information</h3>
+    <h3>Manager Information</h3>
     <p><strong>Name:</strong> <span id="employee-name"></span></p>
     <p><strong>Email:</strong> <span id="employee-email"></span></p>
     <p><strong>Position:</strong> <span id="employee-position"></span></p>
@@ -78,7 +78,7 @@
 </div>
 <h2>EXPENSE REQUEST FOR MANAGER</h2>
 
-<form action="/sendrequest/create" method="post" enctype="multipart/form-data">
+<form action="http://localhost:8080/sendrequest/create" method="post" enctype="multipart/form-data">
     <!-- Combobox -->
     <label for="category">Type:</label>
     <select id="category" name="type">
@@ -94,7 +94,7 @@
 
 
     <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your descroption..."></textarea>
+    <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your description..."></textarea>
 
     <!-- Tệp đính kèm -->
     <label for="file">File:</label>
@@ -103,9 +103,11 @@
     <input type="text" style="display: none" name="employee" id="employee" >
     <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
-    <input type="submit" value="Submit">
+    <input type="submit" value="Confirm">
     <div style="margin-top: 20px">
-        <a href="http://localhost:63342/EmployeeExpense/src/main/resources/static/manager_management.html" style="color: black">History request</a>
+
+        <a href="./manager_management.html" style="color: black">History request</a>
+
     </div>
 </form>
 <script>
@@ -120,9 +122,11 @@
         }
         // Tìm phần tử input .có id là "employee"
         const inputEmployee = document.getElementById("employee");
+        document.getElementById("employee-name").innerText = employee.name;
+        document.getElementById("employee-email").innerText = employee.email;
         document.getElementById("employee-position").innerText = "Manager";
         // Gán giá trị của thuộc tính "name" của nhân viên vào inputEmployee
-        inputEmployee.value = employee.employeeId; // Thay "name" bằng tên thuộc tính bạn muốn hiển thị
+        inputEmployee.value = employee.id; // Thay "name" bằng tên thuộc tính bạn muốn hiển thị
 
         // Log nhân viên ra console (tạm thời để kiểm tra)
         console.log(employee);

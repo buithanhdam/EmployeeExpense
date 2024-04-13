@@ -92,7 +92,7 @@
 
 
     <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your descroption..."></textarea>
+    <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your description..."></textarea>
 
     <!-- Tệp đính kèm -->
     <label for="file">File:</label>
@@ -117,16 +117,15 @@
             window.location.href = "./home.html"
         }
         // Tìm phần tử input có id là "employee"
-        document.getElementById("employee-name").innerText = user.name;
-        document.getElementById("employee-email").innerText = user.email;
-
+        document.getElementById("employee-name").innerText = employee.name;
+        document.getElementById("employee-email").innerText = employee.email;
         document.getElementById("employee-position").innerText = "Employee";
 
         // Cập nhật giá trị cho trường input với id="employee"
         const inputEmployee = document.getElementById("employee");
 
         // Gán giá trị của thuộc tính "name" của nhân viên vào inputEmployee
-        inputEmployee.value = employee.employeeId; // Thay "name" bằng tên thuộc tính bạn muốn hiển thị
+        inputEmployee.value = employee.id; // Thay "name" bằng tên thuộc tính bạn muốn hiển thị
 
         // Log nhân viên ra console (tạm thời để kiểm tra)
         console.log(employee);

@@ -336,7 +336,9 @@
                         })
                             .text('Inspect')
                             .click(function() {
-                                window.location.href = `http://localhost:63342/EmployeeExpense/src/main/resources/static/inspect_request_manager.html?requestId=${item.requestId}`;
+
+                                window.location.href = `http://localhost:63342/EmployeeExpense/static/inspect_request_manager.html/${item.requestId}`;
+
                             })));
                     tableBody.append(row);
                 });
