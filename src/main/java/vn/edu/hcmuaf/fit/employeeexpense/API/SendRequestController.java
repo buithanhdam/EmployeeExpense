@@ -47,16 +47,19 @@ public class SendRequestController {
             try {
                 // Lưu file vào thư mục trên máy chủ
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get("src\\main\\resources\\files\\"+ file.getOriginalFilename());
-                System.out.println(file.getResource());
+                Path path = Paths.get("src/main/resources/static/" + file.getOriginalFilename());
                 Files.write(path, bytes);
 
+                // Lấy đường dẫn tương đối của file
+                String relativePath = "http://localhost:63342/EmployeeExpense/static/" + file.getOriginalFilename();
+
                 // Lấy đường dẫn tuyệt đối của file
-                String filePath = path.toString();
+                String filePath = relativePath;
                 filename = filePath;
                 // Tiếp tục xử lý và lưu thông tin vào cơ sở dữ liệu
                 // ...
             } catch (Exception e) {
+                System.out.println(e.toString());
             }
         }
 
