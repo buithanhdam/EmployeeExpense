@@ -8,5 +8,6 @@ import vn.edu.hcmuaf.fit.employeeexpense.Model.Accountant;
 public interface AccountantRepository extends JpaRepository<Accountant, Integer> {
 
     Accountant findOneByEmail(String email);
+    Accountant findByAccountantId(Long id);
 
 }
