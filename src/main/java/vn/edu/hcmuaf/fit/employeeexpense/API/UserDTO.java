@@ -4,36 +4,46 @@ import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import org.springframework.stereotype.Component;
+import vn.edu.hcmuaf.fit.employeeexpense.Model.Accountant;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.Department;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.Employee;
 
 @Component
 public class UserDTO {
 
-    private Long employeeId;
+    private Long id;
     private String name;
     private String email;
     private String phone;
     private Department department;
-    private boolean isManager;
+    private Integer role;
 
     UserDTO toDto(Employee employee){
         UserDTO result = new UserDTO();
-        result.setEmployeeId(employee.getEmployeeId());
+        result.setId(employee.getEmployeeId());
         result.setEmail(employee.getEmail());
         result.setName(employee.getName());
-        result.setManager(employee.getIsManager()==1?true:false);
+        result.setRole(employee.getIsManager());
         result.setDepartment(employee.getDepartment());
         result.setPhone(employee.getPhone());
         return result;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    UserDTO toDto(Accountant accountant){
+        UserDTO result = new UserDTO();
+        result.setId(accountant.getAccountantId());
+        result.setEmail(accountant.getEmail());
+        result.setName(accountant.getName());
+        result.setRole(2);
+        return result;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -68,11 +78,11 @@ public class UserDTO {
         this.department = department;
     }
 
-    public boolean isManager() {
-        return isManager;
+    public Integer getRole() {
+        return role;
     }
 
-    public void setManager(boolean manager) {
-        isManager = manager;
+    public void setRole(Integer role) {
+        this.role = role;
     }
 }

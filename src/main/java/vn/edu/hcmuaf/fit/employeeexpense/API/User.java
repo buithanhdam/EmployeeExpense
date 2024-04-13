@@ -36,21 +36,30 @@ public class User {
     @PostMapping(value = "/sendOTP")
     public ResponseEntity<?> userOTP(@RequestParam("email") String email){
         // check email
-        //accountantRepository.findOneByEmail(email);
+
         Employee employee = employeeRepository.findOneByEmail(email);
+        Accountant accountant = accountantRepository.findOneByEmail(email);
         //System.out.println(employee);
         if(employee == null){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("user not found");
+            if(accountant == null){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("user not found");
+            }
         }
         String otp = otpGenerator.createOtp();
         boolean checkSend = JavaMail.getInstance().sendMail(email,otp,"Mã OTP ĐĂNG NHAP","Dùng mã này để đăng nhập");
+
         if(!checkSend){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("cant send mail");
-        } else {
+        } else if(employee != null){
             employee.setOtp(otp);
             employeeRepository.save(employee);
             return ResponseEntity.ok().body(null);
+        } else {
+            accountant.setOtp(otp);
+            accountantRepository.save(accountant);
+            return ResponseEntity.ok().body(null);
         }
+
     }
 
     @CrossOrigin(origins = "http://localhost:63342")
@@ -59,14 +68,24 @@ public class User {
         // check email
         //accountantRepository.findOneByEmail(email);
         Employee employee = employeeRepository.findOneByEmail(email);
-        if(employee == null){
+        Accountant accountant = accountantRepository.findOneByEmail(email);
+        if(employee == null && accountant == null){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("user not found");
         }
-        if(employee.getOtp().equals(otp)){
-            session.setAttribute("user",employee);
-            return ResponseEntity.ok(userDTO.toDto(employee));
+        if(employee != null){
+            if(employee.getOtp().equals(otp)){
+                //session.setAttribute("user",employee);
+                return ResponseEntity.ok(userDTO.toDto(employee));
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("otp not found");
+            }
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("otp not found");
+            if(accountant.getOtp().equals(otp)){
+                //session.setAttribute("user",accountant);
+                return ResponseEntity.ok(userDTO.toDto(accountant));
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("otp not found");
+            }
         }
     }
 }

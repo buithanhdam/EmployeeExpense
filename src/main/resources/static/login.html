@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login with Gmail and OTP</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <div class="container">
@@ -28,7 +28,13 @@
                         </div>
                         <button type="button" id="sendOtpBtn" class="btn btn-primary btn-block">Send OTP</button>
                         <button  type="button" id="loginBtn" class="btn btn-primary btn-block" style="display: none;">Login</button>
-
+                        <div id="error-message" style="margin-top: 10px;display: none" class="alert-danger" role="alert">
+                            Email không đúng định dạng
+                        </div>
+                        <div id="error-otp" style="margin-top: 10px;display: none" class="alert-danger" role="alert">
+                            Mã otp không đúng định dạng
+                        </div>
+                        <div id="loading" style="visibility: hidden" class="lds-dual-ring"></div>
                     </form>
                 </div>
             </div>
@@ -40,6 +46,15 @@
     $('#sendOtpBtn').click(function() {
         //console.log( $("#gmail").val());
         let email = $("#gmail").val();
+        if(!validateEmail(email)){
+            document.getElementById('error-message').style.display = 'block';
+            return;
+        } else {
+            document.getElementById('error-message').style.display = 'none';
+        }
+        document.getElementById('loading').style.visibility = 'visible';
+        document.getElementById('sendOtpBtn').style.display = 'none';
+
         localStorage.setItem("email", email);
         $.ajax({
             url: 'http://localhost:8080/api/user/sendOTP',
@@ -53,7 +68,7 @@
                 document.getElementById('gmail').style.display = 'none';
                 document.getElementById('sendOtpBtn').style.display = 'none';
                 document.getElementById('loginBtn').style.display = 'block';
-
+                document.getElementById('loading').style.visibility = 'hidden';
                 console.log(response);
             },
             error: function(xhr, status, error) {
@@ -77,16 +92,34 @@
                 otp : otp
             },
             success: function(response) {
-                window.location.href="home.html";
+
                 localStorage.setItem("user",JSON.stringify(response));
+
                 console.log(response);
+                if (response.role === 2){
+
+                }else if (response.role === 0){
+                    window.location.href = "./expense_request_personal.html"
+                }else{
+                    window.location.href = "./expense_request_group.html"
+                }
+
             },
             error: function(xhr, status, error) {
-                // Handle the error if the request fails
+                document.getElementById('error-otp').style.display = 'block';
                 console.error(error);
             }
         });
     });
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
 
 </script>
 

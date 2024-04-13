@@ -54,21 +54,15 @@
 <body>
 
 
-
 <h2>EXPENSE REQUEST FOR MANAGER</h2>
 
 <form action="/sendrequest/create" method="post" enctype="multipart/form-data">
     <!-- Combobox -->
     <label for="category">Type:</label>
-
-    <select id="category" name="category">
+    <select id="category" name="type">
         <option value="group" selected>Group</option>
 
-
     </select>
-    <label for="amount">Amount:</label>
-    <textarea id="amount" name="amount" rows="2" cols="50" placeholder="" oninput="checkInput()"></textarea>
-    <div id="error-message" class="error" style="color: red"></div>
 
     <label for="amount">Amount:</label>
     <textarea id="amount" name="amount" rows="2" cols="50" placeholder="" oninput="checkInput()"></textarea>
@@ -85,7 +79,6 @@
 
     <input type="file" id="file" name="filename" onchange="checkFileSize()">
     <input type="text" style="display: none" name="employee" id="employee" >
-
     <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
     <input type="submit" value="Submit">
@@ -100,7 +93,10 @@
 
     // Kiểm tra xem có nhân viên hay không
     if (employee) {
-        // Tìm phần tử input có id là "employee"
+        if (employee.role !== 1){
+            window.location.href = "./home.html"
+        }
+        // Tìm phần tử input .có id là "employee"
         const inputEmployee = document.getElementById("employee");
 
         // Gán giá trị của thuộc tính "name" của nhân viên vào inputEmployee
@@ -111,8 +107,8 @@
 
     } else {
         console.log("Không tìm thấy nhân viên trong local storage.");
+        window.location.href = "./login.html"
     }
-
     function checkInput() {
 
         // Lấy giá trị của textarea
@@ -156,9 +152,7 @@
 
     // Hàm định dạng số với phân tách đơn vị số
 
-
-
-
 </script>
+
 </body>
 </html>
