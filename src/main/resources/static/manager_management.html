@@ -367,6 +367,25 @@
                 // Xử lý dữ liệu trả về từ API
                 var tableBody = $('#table tbody');
                 tableBody.empty(); // Xóa dữ liệu cũ trong bảng
+                data.sort(function(a, b) {
+                    // Sắp xếp theo trạng thái từ A-Z
+                    var statusA = a.status.toUpperCase();
+                    var statusB = b.status.toUpperCase();
+                    if (statusA < statusB) {
+                        return -1;
+                    }
+                    if (statusA > statusB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                data.sort(function(a, b) {
+                    // Sắp xếp theo timestamp giảm dần
+
+                    var timestampA = Date.parse(a.createdAt);
+                    var timestampB = Date.parse(b.createdAt);
+                    return timestampB - timestampA;
+                });
 
                 $.each(data, function(index, item) {
                     var row = $('<tr>');
