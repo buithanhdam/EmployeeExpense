@@ -11,8 +11,18 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             background-color: #f9f9f9;
+            float: right;
         }
-
+        #right-panel {
+            width: 30%; /* Độ rộng của panel */
+            float: right; /* Đặt panel ở bên phải */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            margin: 20px; /* Khoảng cách xung quanh panel */
+            margin-top: 47px;
+        }
         /* CSS cho các nhãn */
         label {
             display: block;
@@ -30,18 +40,19 @@
         }
 
         /* CSS cho nút gửi */
-        input[type="submit"] {
+             button,   input[type="submit"] {
             display: block;
             width: 100%;
             padding: 10px;
-
             background-color: #007bff;
-
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
+             button{
+                 background-color: #f6351c;
+             }
 
         /* CSS cho nút gửi khi di chuột vào */
         input[type="submit"]:hover {
@@ -49,10 +60,20 @@
             background-color: #0056b3;
 
         }
+        button:hover{
+            background-color: #e01c02;
+        }
+
     </style>
 </head>
 <body>
-
+<div id="right-panel">
+    <h3>Employee Information</h3>
+    <p><strong>Name:</strong> <span id="employee-name"></span></p>
+    <p><strong>Email:</strong> <span id="employee-email"></span></p>
+    <p><strong>Position:</strong> <span id="employee-position"></span></p>
+    <button id="logout" onclick="logout()">Logout</button>
+</div>
 
 <h2>EXPENSE REQUEST FOR EMPLOYEE</h2>
 
@@ -108,6 +129,10 @@
         console.log("Không tìm thấy nhân viên trong local storage.");
         window.location.href = "./login.html"
     }
+    function logout(){
+        localStorage.removeItem("user");
+        window.location.href = "./login.html"
+    }
 
     function checkInput() {
 
@@ -153,6 +178,29 @@
 
 
 </script>
+<script>
+    // Lấy thông tin người dùng từ local storage
+    const user = JSON.parse(localStorage.getItem("user"));
 
+    // Kiểm tra xem thông tin người dùng có tồn tại hay không
+    if (user) {
+        // Cập nhật thông tin người dùng lên trang HTML
+        document.getElementById("employee-name").innerText = user.name;
+        document.getElementById("employee-email").innerText = user.email;
+
+        if(user.role == 0)  document.getElementById("employee-position").innerText = "Employee";
+        if(user.role == 1)  document.getElementById("employee-position").innerText = "Manager";
+        if(user.role == 2)  document.getElementById("employee-position").innerText = "Accountant";
+        // Cập nhật giá trị cho trường input với id="employee"
+        const inputEmployee = document.getElementById("employee");
+        inputEmployee.value = user.employeeId;
+
+        // Log thông tin người dùng ra console (tạm thời để kiểm tra)
+        console.log(user);
+    } else {
+        // Nếu thông tin người dùng không tồn tại trong local storage
+        console.log("Không tìm thấy thông tin người dùng trong local storage.");
+    }
+</script>
 </body>
 </html>
