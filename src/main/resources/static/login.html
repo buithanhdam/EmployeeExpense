@@ -92,7 +92,9 @@
                 otp : otp
             },
             success: function(response) {
-                 localStorage.setItem("user",JSON.stringify(response));
+
+                localStorage.setItem("user",JSON.stringify(response));
+
                 console.log(response);
                 if (response.role === 2){
 
@@ -101,6 +103,7 @@
                 }else{
                     window.location.href = "./expense_request_group.html"
                 }
+
             },
             error: function(xhr, status, error) {
                 document.getElementById('error-otp').style.display = 'block';
