@@ -1,0 +1,416 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="manager_management.css">
+    <title>Request Management</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="demo">
+            <h1>REQUEST INSPECTATION</h1>
+            <div class="table-responsive-vertical shadow-z-1">
+                <!-- Table starts here -->
+                <table id="table1" class="table table-hover table-mc-light-blue">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>File_attachment</th>
+                        <th>Amount</th>
+                        <th>Create by</th>
+                        <th>Create at</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td data-title="ID">1</td>
+                        <td data-title="Decription">Buy uitility for End Year Party</td>
+                        <td data-title="Link">
+                            <a href="https://i1-kinhdoanh.vnecdn.net/2022/04/01/img-2454-jpg-1648808215-3987-1648808403.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=gQS7uwJU16jFmbkmyTugPw" target="_blank">See file</a>
+                            <iframe src="https://i1-kinhdoanh.vnecdn.net/2022/04/01/img-2454-jpg-1648808215-3987-1648808403.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=gQS7uwJU16jFmbkmyTugPw" width="100%" height="500" style="border: none; overflow: hidden; object-fit: contain;"></iframe>
+                        </td>
+                        <td data-title="Amount">500000</td>
+                        <td data-title="Create by">Bùi Thanh Đảm</td>
+                        <td data-title="Create at">13:49 12/04/2024</td>
+                        <td data-title="Action">
+                            <button>Inspect</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="demo">
+            <h1>REQUEST HISTORY</h1>
+            <div class="table-responsive-vertical shadow-z-1">
+                <!-- Table starts here -->
+                <table id="table" class="table table-hover table-mc-light-blue">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>File_attachment</th>
+                        <th>Amount</th>
+                        <th>Create by</th>
+                        <th>Create at</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td data-title="ID">1</td>
+                        <td data-title="Decription">Buy uitility for End Year Party</td>
+                        <td data-title="Link">
+                            <a href="https://i1-kinhdoanh.vnecdn.net/2022/04/01/img-2454-jpg-1648808215-3987-1648808403.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=gQS7uwJU16jFmbkmyTugPw" target="_blank">See file</a>
+                            <iframe src="https://i1-kinhdoanh.vnecdn.net/2022/04/01/img-2454-jpg-1648808215-3987-1648808403.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=gQS7uwJU16jFmbkmyTugPw" width="100%" height="500" style="border: none; overflow: hidden; object-fit: contain;"></iframe>
+                        </td>
+                        <td data-title="Amount">500000</td>
+                        <td data-title="Create by">Bùi Thanh Đảm</td>
+                        <td data-title="Create at">13:49 12/04/2024</td>
+                        <td data-title="Action">Approved
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-title="ID">2</td>
+                        <td data-title="Decription">Office supplies purchase</td>
+                        <td data-title="Link">
+                            <a href="https://example.com/file.pdf" target="_blank">See file</a>
+                        </td>
+                        <td data-title="Amount">250000</td>
+                        <td data-title="Create by">Nguyễn Văn An</td>
+                        <td data-title="Create at">09:15 10/04/2024</td>
+                        <td data-title="Action"> <Approved>                 <Approved>                              <Approved>                                                                                                      </Approved></Approved></Approved>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-title="ID">3</td>
+                        <td data-title="Decription">Team building activity</td>
+                        <td data-title="Link">
+                        </td>
+                        <td data-title="Amount">1000000</td>
+                        <td data-title="Create by">Trần Thị Lan</td>
+                        <td data-title="Create at">16:30 08/04/2024</td>
+                        <td data-title="Action">Reject
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    $(document).ready(function() {
+
+        var table1 = $('#table1');
+
+        // Table bordered
+        $('#table1-bordered').change(function() {
+            var value = $( this ).val();
+            table1.removeClass('table1-bordered').addClass(value);
+        });
+
+        // Table striped
+        $('#table1-striped').change(function() {
+            var value = $( this ).val();
+            table1.removeClass('table1-striped').addClass(value);
+        });
+
+        // Table hover
+        $('#table1-hover').change(function() {
+            var value = $( this ).val();
+            table1.removeClass('table1-hover').addClass(value);
+        });
+
+        // Table color
+        $('#table1-color').change(function() {
+            var value = $(this).val();
+            table1.removeClass(/^table-mc-/).addClass(value);
+        });
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkCells = document.querySelectorAll('td[data-title="Link"]');
+            const amountCells = document.querySelectorAll('td[data-title="Amount"]');
+
+            linkCells.forEach(function(cell) {
+                const links = cell.querySelectorAll('a');
+                if (links.length === 0) {
+                    cell.textContent = 'None';
+                }
+            });
+
+            amountCells.forEach(function(cell) {
+                const amount = cell.textContent;
+                const formattedAmount = formatAmount(amount);
+                cell.textContent = formattedAmount;
+            });
+
+            function formatAmount(amount) {
+                const thousandSeparator = ',';
+                const parts = amount.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+                return parts.join('.');
+            }
+        });
+    });
+
+    (function(removeClass) {
+
+        jQuery.fn.removeClass = function( value ) {
+            if ( value && typeof value.test === "function" ) {
+                for ( var i = 0, l = this.length; i < l; i++ ) {
+                    var elem = this[i];
+                    if ( elem.nodeType === 1 && elem.className ) {
+                        var classNames = elem.className.split( /\s+/ );
+
+                        for ( var n = classNames.length; n--; ) {
+                            if ( value.test(classNames[n]) ) {
+                                classNames.splice(n, 1);
+                            }
+                        }
+                        elem.className = jQuery.trim( classNames.join(" ") );
+                    }
+                }
+            } else {
+                removeClass.call(this, value);
+            }
+            return this;
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkCells = document.querySelectorAll('td[data-title="Link"]');
+            const amountCells = document.querySelectorAll('td[data-title="Amount"]');
+
+            linkCells.forEach(function(cell) {
+                const links = cell.querySelectorAll('a');
+                if (links.length === 0) {
+                    cell.textContent = 'None';
+                }
+            });
+
+            amountCells.forEach(function(cell) {
+                const amount = cell.textContent;
+                const formattedAmount = formatAmount(amount);
+                cell.textContent = formattedAmount;
+            });
+
+            function formatAmount(amount) {
+                const thousandSeparator = ',';
+                const parts = amount.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+                return parts.join('.');
+            }
+        });
+    })(jQuery.fn.removeClass);
+
+</script>
+<script>
+
+    $(document).ready(function() {
+
+        var table = $('#table');
+
+        // Table bordered
+        $('#table-bordered').change(function() {
+            var value = $( this ).val();
+            table.removeClass('table-bordered').addClass(value);
+        });
+
+        // Table striped
+        $('#table-striped').change(function() {
+            var value = $( this ).val();
+            table.removeClass('table-striped').addClass(value);
+        });
+
+        // Table hover
+        $('#table-hover').change(function() {
+            var value = $( this ).val();
+            table.removeClass('table-hover').addClass(value);
+        });
+
+        // Table color
+        $('#table-color').change(function() {
+            var value = $(this).val();
+            table.removeClass(/^table-mc-/).addClass(value);
+        });
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkCells = document.querySelectorAll('td[data-title="Link"]');
+            const amountCells = document.querySelectorAll('td[data-title="Amount"]');
+
+            linkCells.forEach(function(cell) {
+                const links = cell.querySelectorAll('a');
+                if (links.length === 0) {
+                    cell.textContent = 'None';
+                }
+            });
+
+            amountCells.forEach(function(cell) {
+                const amount = cell.textContent;
+                const formattedAmount = formatAmount(amount);
+                cell.textContent = formattedAmount;
+            });
+
+            function formatAmount(amount) {
+                const thousandSeparator = ',';
+                const parts = amount.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+                return parts.join('.');
+            }
+        });
+    });
+
+    // jQuery’s hasClass and removeClass on steroids
+    // by Nikita Vasilyev
+    // https://github.com/NV/jquery-regexp-classes
+    (function(removeClass) {
+
+        jQuery.fn.removeClass = function( value ) {
+            if ( value && typeof value.test === "function" ) {
+                for ( var i = 0, l = this.length; i < l; i++ ) {
+                    var elem = this[i];
+                    if ( elem.nodeType === 1 && elem.className ) {
+                        var classNames = elem.className.split( /\s+/ );
+
+                        for ( var n = classNames.length; n--; ) {
+                            if ( value.test(classNames[n]) ) {
+                                classNames.splice(n, 1);
+                            }
+                        }
+                        elem.className = jQuery.trim( classNames.join(" ") );
+                    }
+                }
+            } else {
+                removeClass.call(this, value);
+            }
+            return this;
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkCells = document.querySelectorAll('td[data-title="Link"]');
+            const amountCells = document.querySelectorAll('td[data-title="Amount"]');
+
+            linkCells.forEach(function(cell) {
+                const links = cell.querySelectorAll('a');
+                if (links.length === 0) {
+                    cell.textContent = 'None';
+                }
+            });
+
+            amountCells.forEach(function(cell) {
+                const amount = cell.textContent;
+                const formattedAmount = formatAmount(amount);
+                cell.textContent = formattedAmount;
+            });
+
+            function formatAmount(amount) {
+                const thousandSeparator = ',';
+                const parts = amount.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+                return parts.join('.');
+            }
+        });
+    })(jQuery.fn.removeClass);
+
+
+    $(document).ready(function() {
+        // Lấy thông tin người dùng từ localStorage
+        var userData = JSON.parse(localStorage.getItem("user"));
+        var userId = userData.employeeId;
+
+        // Gửi yêu cầu AJAX để lấy dữ liệu từ API
+        $.ajax({
+            url: `http://localhost:8080/api/updateRequest/getSubmitRequests/${userId}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                // Xử lý dữ liệu trả về từ API
+                var tableBody = $('#table1 tbody');
+                tableBody.empty(); // Xóa dữ liệu cũ trong bảng
+
+                $.each(data, function(index, item) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(item.requestId));
+                    row.append($('<td>').text(item.decription));
+
+                    if(item.file_attachment){
+                        var fileLink = $('<a>').attr('href', item.file_attachment).attr('target', '_blank').text('See file');
+                        var fileIframe = $('<iframe>').attr('src', item.file_attachment).attr('width', '100%').attr('height', '500').css('border', 'none').css('overflow', 'hidden').css('object-fit', 'contain');
+                        var fileTd = $('<td>').append(fileLink).append(fileIframe);
+                        row.append(fileTd);
+
+                    }else{
+                        row.append($('<td>').append("none"));
+                    }
+
+                    row.append($('<td>').text(item.amount));
+                    row.append($('<td>').text(item.employee.name));
+                    row.append($('<td>').text(item.createdAt));
+                    row.append($('<td>', { 'data-title': 'Action' })
+                        .append($('<button>', {
+                            'type': 'button'
+                        })
+                            .text('Inspect')
+                            .click(function() {
+                                window.location.href = `http://localhost:63342/EmployeeExpense/src/main/resources/static/inspect_request_manager.html/${item.requestId}`;
+                            })));
+                    tableBody.append(row);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $(document).ready(function() {
+        // Lấy thông tin người dùng từ localStorage
+        var userData = JSON.parse(localStorage.getItem("user"));
+        var userId = userData.employeeId;
+
+        // Gửi yêu cầu AJAX để lấy dữ liệu từ API
+        $.ajax({
+            url: `http://localhost:8080/api/updateRequest/getConfirmRequests/${userId}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                // Xử lý dữ liệu trả về từ API
+                var tableBody = $('#table tbody');
+                tableBody.empty(); // Xóa dữ liệu cũ trong bảng
+
+                $.each(data, function(index, item) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(item.requestId));
+                    row.append($('<td>').text(item.decription));
+
+                    if(item.file_attachment){
+                        var fileLink = $('<a>').attr('href', item.file_attachment).attr('target', '_blank').text('See file');
+                        var fileIframe = $('<iframe>').attr('src', item.file_attachment).attr('width', '100%').attr('height', '500').css('border', 'none').css('overflow', 'hidden').css('object-fit', 'contain');
+                        var fileTd = $('<td>').append(fileLink).append(fileIframe);
+                        row.append(fileTd);
+
+                    }else{
+                        row.append($('<td>').append("none"));
+                    }
+
+                    row.append($('<td>').text(item.amount));
+                    row.append($('<td>').text(item.employee.name));
+                    row.append($('<td>').text(item.createdAt));
+                    row.append($('<td>').text(item.status));
+                    tableBody.append(row);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
+</html>
