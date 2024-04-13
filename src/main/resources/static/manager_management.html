@@ -78,29 +78,6 @@
                         <td data-title="Action">Approved
                         </td>
                     </tr>
-                    <tr>
-                        <td data-title="ID">2</td>
-                        <td data-title="Decription">Office supplies purchase</td>
-                        <td data-title="Link">
-                            <a href="https://example.com/file.pdf" target="_blank">See file</a>
-                        </td>
-                        <td data-title="Amount">250000</td>
-                        <td data-title="Create by">Nguyễn Văn An</td>
-                        <td data-title="Create at">09:15 10/04/2024</td>
-                        <td data-title="Action"> <Approved>                 <Approved>                              <Approved>                                                                                                      </Approved></Approved></Approved>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="ID">3</td>
-                        <td data-title="Decription">Team building activity</td>
-                        <td data-title="Link">
-                        </td>
-                        <td data-title="Amount">1000000</td>
-                        <td data-title="Create by">Trần Thị Lan</td>
-                        <td data-title="Create at">16:30 08/04/2024</td>
-                        <td data-title="Action">Reject
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -322,7 +299,7 @@
     $(document).ready(function() {
         // Lấy thông tin người dùng từ localStorage
         var userData = JSON.parse(localStorage.getItem("user"));
-        var userId = userData.employeeId;
+        var userId = userData.id;
 
         // Gửi yêu cầu AJAX để lấy dữ liệu từ API
         $.ajax({
@@ -359,7 +336,9 @@
                         })
                             .text('Inspect')
                             .click(function() {
+
                                 window.location.href = `http://localhost:63342/EmployeeExpense/static/inspect_request_manager.html/${item.requestId}`;
+
                             })));
                     tableBody.append(row);
                 });
