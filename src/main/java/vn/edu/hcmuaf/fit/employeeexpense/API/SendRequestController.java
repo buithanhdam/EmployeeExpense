@@ -56,7 +56,7 @@ public class SendRequestController {
             }
         }
         String status = "Submit";
-        if (employee.getIsManager() != 1){
+        if (employee.getIsManager() == 1){
              status = "Confirm";
         }
         ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, status);
@@ -65,7 +65,12 @@ public class SendRequestController {
         expenseRequestRepository.save(expenseRequest);
 
         // Redirect to a success page or return the view name
-        return "redirect:/expense_request_group.html"; // Redirect to a success page
+        if (employee.getIsManager()==1){
+            return "redirect:./expense_request_group.html"; // Redirect to a success page
+        }else{
+            return "redirect:./expense_request_personal.html"; // Redirect to a success page
+        }
+
     }
 
 
