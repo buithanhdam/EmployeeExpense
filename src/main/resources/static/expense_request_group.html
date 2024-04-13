@@ -60,9 +60,7 @@
     <!-- Combobox -->
     <label for="category">Type:</label>
     <select id="category" name="type">
-
-        <option value="loai1" disabled>Personal</option>
-        <option value="loai2" selected>Group</option>
+        <option value="personal" selected>Personal</option>
 
     </select>
 
@@ -80,11 +78,32 @@
     <label for="file">File:</label>
 
     <input type="file" id="file" name="filename" onchange="checkFileSize()">
+    <input type="text" style="display: none" name="employee" id="employee" >
     <div id="error-message-file" class="error" style="color: red"></div>
     <!-- Nút gửi -->
     <input type="submit" value="Submit">
+    <div style="margin-top: 20px">
+        <a href="" style="color: black">History request</a>
+    </div>
 </form>
 <script>
+    // Lấy đối tượng nhân viên từ local storage
+    const employee = JSON.parse(localStorage.getItem("user"));
+
+    // Kiểm tra xem có nhân viên hay không
+    if (employee) {
+        // Tìm phần tử input có id là "employee"
+        const inputEmployee = document.getElementById("employee");
+
+        // Gán giá trị của thuộc tính "name" của nhân viên vào inputEmployee
+        inputEmployee.value = employee.employeeId; // Thay "name" bằng tên thuộc tính bạn muốn hiển thị
+
+        // Log nhân viên ra console (tạm thời để kiểm tra)
+        console.log(employee);
+
+    } else {
+        console.log("Không tìm thấy nhân viên trong local storage.");
+    }
     function checkInput() {
 
         // Lấy giá trị của textarea

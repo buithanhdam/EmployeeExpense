@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.employeeexpense.Controller;
+package vn.edu.hcmuaf.fit.employeeexpense.API;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,22 @@ import java.sql.Timestamp;
 public class SendRequestController {
     @Autowired
     private ExpenseRequestRepository expenseRequestRepository;
+
     @Autowired
-    private EmployeeRepository emrepo;
+    EmployeeRepository employeeRepository;
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping("/create")
     public String createRequest(@RequestParam("type") String type,
                                 @RequestParam("description") String description,
                                 @RequestParam("amount") float amount,
                                 @RequestParam("filename") MultipartFile file,
-                                HttpSession session) {
+                                @RequestParam("employee") String id
+                                ) {
         // Create ExpenseRequest object
-        Employee employee = (Employee) session.getAttribute("user");
+        Employee employee = employeeRepository.findByEmployeeId(Long.parseLong(id));
 //        Employee employee = emrepo.getOne(1);
         if (employee==null){
-            return "redirect:/login";
+            return "redirect:./login.html";
         }
 
         String filename = "";
@@ -52,8 +55,11 @@ public class SendRequestController {
             } catch (Exception e) {
             }
         }
-
-        ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, "Requested");
+        String status = "Submit";
+        if (employee.getIsManager() != 1){
+             status = "Confirm";
+        }
+        ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, status);
 
         // Save ExpenseRequest
         expenseRequestRepository.save(expenseRequest);
