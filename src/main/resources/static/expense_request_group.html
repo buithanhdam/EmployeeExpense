@@ -120,7 +120,7 @@
         }
         // Tìm phần tử input .có id là "employee"
         const inputEmployee = document.getElementById("employee");
-
+        document.getElementById("employee-position").innerText = "Manager";
         // Gán giá trị của thuộc tính "name" của nhân viên vào inputEmployee
         inputEmployee.value = employee.employeeId; // Thay "name" bằng tên thuộc tính bạn muốn hiển thị
 
@@ -179,30 +179,6 @@
     // Hàm định dạng số với phân tách đơn vị số
 
 </script>
-<script>
-    // Lấy thông tin người dùng từ local storage
-    const user = JSON.parse(localStorage.getItem("user"));
 
-    // Kiểm tra xem thông tin người dùng có tồn tại hay không
-    if (user) {
-        // Cập nhật thông tin người dùng lên trang HTML
-        document.getElementById("employee-name").innerText = user.name;
-        document.getElementById("employee-email").innerText = user.email;
-
-      if(user.role == 0)  document.getElementById("employee-position").innerText = "Employee";
-        if(user.role == 1)  document.getElementById("employee-position").innerText = "Manager";
-        if(user.role == 2)  document.getElementById("employee-position").innerText = "Accountant";
-        // Cập nhật giá trị cho trường input với id="employee"
-        const inputEmployee = document.getElementById("employee");
-        inputEmployee.value = user.employeeId;
-
-        // Log thông tin người dùng ra console (tạm thời để kiểm tra)
-        console.log(user);
-    } else {
-        // Nếu thông tin người dùng không tồn tại trong local storage
-        console.log("Không tìm thấy thông tin người dùng trong local storage.");
-    }
-
-</script>
 </body>
 </html>
