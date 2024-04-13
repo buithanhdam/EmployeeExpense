@@ -49,11 +49,11 @@
         <input type="text" class="form-control" id="departmentName" placeholder="Enter department name" readonly>
     </div>
 
-    <button type="submit" id="approve" class="btn btn-primary">Approve</button>
+    <button type="submit" id="approve" class="btn btn-primary">Confirm</button>
     <br>
     <br>
     <label for="departmentName">Reason</label>
-    <textarea name="reason" style="width: 100%"></textarea>
+    <textarea name="reason" id="reason" style="width: 100%"></textarea>
     <button type="submit" id="reject" class="btn btn-danger">Reject</button>
 
 
@@ -82,7 +82,7 @@
     };
 
     $(document).ready(function () {
-        var id = getUrlParameter("requestId")
+        var id =sessionStorage.getItem("requetsID")
         if (id == null) {
             window.location.href = "/404.html";
         }
@@ -101,6 +101,7 @@
                 console.log(data);
 
                 // Áp dụng dữ liệu vào các trường input
+                $('#type').val(data.type)
                 $('#description').val(data.decription);
                 $('#amount').val(data.amount);
                 // $('#fileAttachment').val(data.fileAttachment);
@@ -134,22 +135,27 @@
         // Xử lý sự kiện click cho nút Approve
         $('#approve').click(function(e) {
             //e.preventDefault();
-            var requestId = Number(getUrlParameter("requestId"));
-            var url = `http://localhost:8080/api/updateRequest/approveRequest`;
+            var requestId = sessionStorage.getItem("requetsID");
+            var url = `http://localhost:8080/api/updateRequest/confirmRequest`;
             var data = { request_id: requestId, manager_id: userId };
             console.log("data",data);
-            sendRequest(url, "POST", data, 'approve');
+            sendRequest(url, "POST", data, 'confirm');
         });
 
         // Xử lý sự kiện click cho nút Reject
         $('#reject').click(function(e) {
             e.preventDefault();
-            var requestId = Number(getUrlParameter("requestId"));
+            var requestId = sessionStorage.getItem("requetsID");
             var reason = $('textarea[name="reason"]').val();
             var url = `http://localhost:8080/api/updateRequest/rejectRequest`;
             var data = { request_id: requestId, manager_id: userId, reason: reason };
             console.log(data);
-            sendRequest(url, "POST", data, 'reject');
+            if (reason !== null || reason !== '' || reason.length >=1){
+                sendRequest(url, "POST", data, 'reject');
+            }else{
+                alert("bạn cần nhập lý do để reject 1 yêu cầu!!");
+            }
+
         });
 
         // Hàm gửi request bằng AJAX
@@ -161,13 +167,13 @@
                 data: data,
                 success: function(response) {
                     // Xử lý kết quả nếu cần
-                    if (action === 'approve') {
-                        console.log("Request approved successfully!");
+                    if (action === 'confirm') {
+                        console.log("Request confirmed successfully!");
                     } else if (action === 'reject') {
                         console.log("Request rejected successfully!");
                     }
                     alert("success!");
-                    window.location.back();
+                    window.location.href = "./manager_management.html";
                 },
                 error: function(xhr, status, error) {
                     alert("error!");

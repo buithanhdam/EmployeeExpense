@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="display: flex;flex-direction: column;gap: 1rem">
         <div class="demo">
             <h1>REQUEST INSPECTATION</h1>
             <div class="table-responsive-vertical shadow-z-1">
@@ -25,6 +25,7 @@
                         <th>Amount</th>
                         <th>Create by</th>
                         <th>Create at</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -39,6 +40,7 @@
                         <td data-title="Amount">500000</td>
                         <td data-title="Create by">Bùi Thanh Đảm</td>
                         <td data-title="Create at">13:49 12/04/2024</td>
+                        <td data-title="Status">Submit</td>
                         <td data-title="Action">
                             <button>Inspect</button>
                         </td>
@@ -330,6 +332,7 @@
                     row.append($('<td>').text(item.amount));
                     row.append($('<td>').text(item.employee.name));
                     row.append($('<td>').text(item.createdAt));
+                    row.append($('<td>').text(item.status));
                     row.append($('<td>', { 'data-title': 'Action' })
                         .append($('<button>', {
                             'type': 'button'
@@ -337,7 +340,8 @@
                             .text('Inspect')
                             .click(function() {
 
-                                window.location.href = `http://localhost:63342/EmployeeExpense/static/inspect_request_manager.html/${item.requestId}`;
+                                window.location.href = `http://localhost:63342/EmployeeExpense/static/inspect_request_manager.html`;
+                                sessionStorage.setItem("requetsID",item.requestId)
 
                             })));
                     tableBody.append(row);
@@ -351,7 +355,7 @@
     $(document).ready(function() {
         // Lấy thông tin người dùng từ localStorage
         var userData = JSON.parse(localStorage.getItem("user"));
-        var userId = userData.employeeId;
+        var userId = userData.id;
 
         // Gửi yêu cầu AJAX để lấy dữ liệu từ API
         $.ajax({
