@@ -92,6 +92,9 @@
 
     // Kiểm tra xem có nhân viên hay không
     if (employee) {
+        if (employee.role !== 0){
+            window.location.href = "../"
+        }
         // Tìm phần tử input có id là "employee"
         const inputEmployee = document.getElementById("employee");
 
@@ -103,6 +106,7 @@
 
     } else {
         console.log("Không tìm thấy nhân viên trong local storage.");
+        window.location.href = "./login.html"
     }
 
     function checkInput() {

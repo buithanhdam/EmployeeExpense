@@ -60,7 +60,7 @@
     <!-- Combobox -->
     <label for="category">Type:</label>
     <select id="category" name="type">
-        <option value="personal" selected>Personal</option>
+        <option value="group" selected>Group</option>
 
     </select>
 
@@ -87,12 +87,16 @@
     </div>
 </form>
 <script>
+
     // Lấy đối tượng nhân viên từ local storage
     const employee = JSON.parse(localStorage.getItem("user"));
 
     // Kiểm tra xem có nhân viên hay không
     if (employee) {
-        // Tìm phần tử input có id là "employee"
+        if (employee.role !== 1){
+            window.location.href = "../"
+        }
+        // Tìm phần tử input .có id là "employee"
         const inputEmployee = document.getElementById("employee");
 
         // Gán giá trị của thuộc tính "name" của nhân viên vào inputEmployee
@@ -103,6 +107,7 @@
 
     } else {
         console.log("Không tìm thấy nhân viên trong local storage.");
+        window.location.href = "./login.html"
     }
     function checkInput() {
 

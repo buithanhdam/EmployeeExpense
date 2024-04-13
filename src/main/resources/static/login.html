@@ -77,9 +77,17 @@
                 otp : otp
             },
             success: function(response) {
-                window.location.href="home.html";
+                // window.location.href="./home.html";
                 localStorage.setItem("user",JSON.stringify(response));
                 console.log(response);
+                if (response.role === 2){
+
+                }else if (response.role === 0){
+                    window.location.href = "./expense_request_personal.html"
+                }else{
+                    window.location.href = "./expense_request_group.html"
+                }
+
             },
             error: function(xhr, status, error) {
                 // Handle the error if the request fails
