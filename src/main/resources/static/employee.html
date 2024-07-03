@@ -27,13 +27,14 @@
         <div class="left-side-menu left-side-menu-detached">
 
             <div class="leftbar-user">
-                <a href="javascript: void(0);">
-                    <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42"
-                         class="rounded-circle shadow-sm">
-                    <span class="leftbar-user-name" id="userName">abc</span>
-                    <span class="text-muted" id="userEmail">abc</span>
-                    <span class="text-info font-weight-bold" id="userPosition">abc</span>
-                </a>
+                <div class="col">
+                <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42"
+                class="rounded-circle shadow-sm">
+                <span class="leftbar-user-name" id="userName">abc</span>
+                <span class="text-muted" id="userEmail">abc</span>
+                <span class="text-info font-weight-bold" id="userPosition">abc</span>
+                </div>     <button class="btn btn-danger" id="logout" onclick="logout()">Log out</button>
+
             </div>
 
             <!--- Sidemenu -->
@@ -69,12 +70,12 @@
                         <div class="page-title-box">
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-<!--                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>-->
-<!--                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>-->
-<!--                                    <li class="breadcrumb-item active">Form Elements</li>-->
+                                    <!--                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>-->
+                                    <!--                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>-->
+                                    <!--                                    <li class="breadcrumb-item active">Form Elements</li>-->
                                 </ol>
                             </div>
-<!--                            <h4 class="page-title">Form Elements</h4>-->
+                            <!--                            <h4 class="page-title">Form Elements</h4>-->
                         </div>
                     </div>
                 </div>
@@ -86,321 +87,58 @@
                             <div class="card-body">
                                 <h4 class="header-title">EXPENSE REQUEST FOR EMPLOYEE</h4>
                                 <p class="text-muted font-14">
-                                    Most common form control, text-based input fields. Includes support for all HTML5
-                                    types: <code>text</code>, <code>password</code>, <code>datetime</code>, <code>datetime-local</code>,
-                                    <code>date</code>, <code>month</code>, <code>time</code>, <code>week</code>, <code>number</code>,
-                                    <code>email</code>, <code>url</code>, <code>search</code>, <code>tel</code>, and
-                                    <code>color</code>.
+                                    The "Expense Request for Employee" interface allows employees to submit expense
+                                    reimbursement requests, including details such as expense type, description, amount,
+                                    and attached receipts. This streamlines expense tracking and approval processes.
                                 </p>
 
-                                <ul class="nav nav-tabs nav-bordered mb-3">
-                                    <li class="nav-item">
-                                        <a href="#input-types-preview" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link active">
-                                            Preview
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#input-types-code" data-toggle="tab" aria-expanded="true"
-                                           class="nav-link">
-                                            Code
-                                        </a>
-                                    </li>
-                                </ul> <!-- end nav-->
+                                <div class="row">
+                                    <div class="col">
+                                        <form id="expenseForm" action="http://localhost:8080/api/request/create"
+                                              method="post" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <label for="type">Type</label>
+                                                <input type="text" id="type" name="type" value="personal"
+                                                       class="form-control"
+                                                       readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="amount">Amount</label>
+                                                <input name="amount" placeholder="" type="number" id="amount"
+                                                       class="form-control">
+                                                <span id="error-message" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea name="description" id="description" class="form-control"
+                                                          rows="4" cols="50"
+                                                          placeholder="Enter your description..."></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="file">File</label>
+                                                <input type="file" id="file" name="filename" class="form-control-file">
+                                                <span id="error-message-file" class="text-danger"></span>
+                                            </div>
+                                            <input type="text" style="display: none" name="employee" id="employeeId">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                        <div id="success-message" class="text-success"></div>
+                                        <div id="error-message-submit" class="text-danger"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div><!-- end col -->
+            </div>
+            <!-- end row -->
 
-                                <div class="tab-content">
-                                    <div class="tab-pane show active" id="input-types-preview">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <form>
-                                                    <div class="form-group mb-3">
-                                                        <label for="simpleinput">Text</label>
-                                                        <input type="text" id="simpleinput" class="form-control">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-email">Email</label>
-                                                        <input type="email" id="example-email" name="example-email"
-                                                               class="form-control" placeholder="Email">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-password">Password</label>
-                                                        <input type="password" id="example-password"
-                                                               class="form-control" value="password">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="password">Show/Hide Password</label>
-                                                        <div class="input-group input-group-merge">
-                                                            <input type="password" id="password" class="form-control"
-                                                                   placeholder="Enter your password">
-                                                            <div class="input-group-append" data-password="false">
-                                                                <div class="input-group-text">
-                                                                    <span class="password-eye"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-palaceholder">Placeholder</label>
-                                                        <input type="text" id="example-palaceholder"
-                                                               class="form-control" placeholder="placeholder">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-textarea">Text area</label>
-                                                        <textarea class="form-control" id="example-textarea"
-                                                                  rows="5"></textarea>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-readonly">Readonly</label>
-                                                        <input type="text" id="example-readonly" class="form-control"
-                                                               readonly="" value="Readonly value">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-disable">Disabled</label>
-                                                        <input type="text" class="form-control" id="example-disable"
-                                                               disabled="" value="Disabled value">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-static">Static control</label>
-                                                        <input type="text" readonly class="form-control-plaintext"
-                                                               id="example-static" value="email@example.com">
-                                                    </div>
-
-                                                    <div class="form-group mb-0">
-                                                        <label for="example-helping">Helping text</label>
-                                                        <input type="text" id="example-helping" class="form-control"
-                                                               placeholder="Helping text">
-                                                        <span class="help-block"><small>A block of help text that breaks onto a new line and may extend beyond one line.</small></span>
-                                                    </div>
-
-                                                </form>
-                                            </div> <!-- end col -->
-
-                                            <div class="col-lg-6">
-                                                <form>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-select">Input Select</label>
-                                                        <select class="form-control" id="example-select">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-multiselect">Multiple Select</label>
-                                                        <select id="example-multiselect" multiple class="form-control">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-fileinput">Default file input</label>
-                                                        <input type="file" id="example-fileinput"
-                                                               class="form-control-file">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-date">Date</label>
-                                                        <input class="form-control" id="example-date" type="date"
-                                                               name="date">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-month">Month</label>
-                                                        <input class="form-control" id="example-month" type="month"
-                                                               name="month">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-time">Time</label>
-                                                        <input class="form-control" id="example-time" type="time"
-                                                               name="time">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-week">Week</label>
-                                                        <input class="form-control" id="example-week" type="week"
-                                                               name="week">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-number">Number</label>
-                                                        <input class="form-control" id="example-number" type="number"
-                                                               name="number">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="example-color">Color</label>
-                                                        <input class="form-control" id="example-color" type="color"
-                                                               name="color" value="#727cf5">
-                                                    </div>
-
-                                                    <div class="form-group mb-0">
-                                                        <label for="example-range">Range</label>
-                                                        <input class="custom-range" id="example-range" type="range"
-                                                               name="range" min="0" max="100">
-                                                    </div>
-
-                                                </form>
-                                            </div> <!-- end col -->
-                                        </div>
-                                        <!-- end row-->
-                                    </div> <!-- end preview-->
-
-                                    <div class="tab-pane" id="input-types-code">
-                                                <pre class="mb-0">
-                                                    <span class="html escape">
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;simpleinput&quot;&gt;Text&lt;/label&gt;
-                                                            &lt;input type=&quot;text&quot; id=&quot;simpleinput&quot; class=&quot;form-control&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-email&quot;&gt;Email&lt;/label&gt;
-                                                            &lt;input type=&quot;email&quot; id=&quot;example-email&quot; name=&quot;example-email&quot; class=&quot;form-control&quot; placeholder=&quot;Email&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-password&quot;&gt;Password&lt;/label&gt;
-                                                            &lt;input type=&quot;password&quot; id=&quot;example-password&quot; class=&quot;form-control&quot; value=&quot;password&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;password&quot;&gt;Show/Hide Password&lt;/label&gt;
-                                                            &lt;div class=&quot;input-group input-group-merge&quot;&gt;
-                                                                &lt;input type=&quot;password&quot; id=&quot;password&quot; class=&quot;form-control&quot; placeholder=&quot;Enter your password&quot;&gt;
-                                                                &lt;div class=&quot;input-group-append&quot; data-password=&quot;false&quot;&gt;
-                                                                    &lt;div class=&quot;input-group-text&quot;&gt;
-                                                                        &lt;span class=&quot;password-eye&quot;&gt;&lt;/span&gt;
-                                                                    &lt;/div&gt;
-                                                                &lt;/div&gt;
-                                                            &lt;/div&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-palaceholder&quot;&gt;Placeholder&lt;/label&gt;
-                                                            &lt;input type=&quot;text&quot; id=&quot;example-palaceholder&quot; class=&quot;form-control&quot; placeholder=&quot;placeholder&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-textarea&quot;&gt;Text area&lt;/label&gt;
-                                                            &lt;textarea class=&quot;form-control&quot; id=&quot;example-textarea&quot; rows=&quot;5&quot;&gt;&lt;/textarea&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-readonly&quot;&gt;Readonly&lt;/label&gt;
-                                                            &lt;input type=&quot;text&quot; id=&quot;example-readonly&quot; class=&quot;form-control&quot; readonly=&quot;&quot; value=&quot;Readonly value&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-disable&quot;&gt;Disabled&lt;/label&gt;
-                                                            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;example-disable&quot; disabled=&quot;&quot; value=&quot;Disabled value&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-static&quot;&gt;Static control&lt;/label&gt;
-                                                            &lt;input type=&quot;text&quot; readonly class=&quot;form-control-plaintext&quot; id=&quot;example-static&quot; value=&quot;email@example.com&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-helping&quot;&gt;Helping text&lt;/label&gt;
-                                                            &lt;input type=&quot;text&quot; id=&quot;example-helping&quot; class=&quot;form-control&quot; placeholder=&quot;Helping text&quot;&gt;
-                                                            &lt;span class=&quot;help-block&quot;&gt;&lt;small&gt;A block of help text that breaks onto a new line and may extend beyond one line.&lt;/small&gt;&lt;/span&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-select&quot;&gt;Input Select&lt;/label&gt;
-                                                            &lt;select class=&quot;form-control&quot; id=&quot;example-select&quot;&gt;
-                                                                &lt;option&gt;1&lt;/option&gt;
-                                                                &lt;option&gt;2&lt;/option&gt;
-                                                                &lt;option&gt;3&lt;/option&gt;
-                                                                &lt;option&gt;4&lt;/option&gt;
-                                                                &lt;option&gt;5&lt;/option&gt;
-                                                            &lt;/select&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-multiselect&quot;&gt;Multiple Select&lt;/label&gt;
-                                                            &lt;select id=&quot;example-multiselect&quot; multiple class=&quot;form-control&quot;&gt;
-                                                                &lt;option&gt;1&lt;/option&gt;
-                                                                &lt;option&gt;2&lt;/option&gt;
-                                                                &lt;option&gt;3&lt;/option&gt;
-                                                                &lt;option&gt;4&lt;/option&gt;
-                                                                &lt;option&gt;5&lt;/option&gt;
-                                                            &lt;/select&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-fileinput&quot;&gt;Default file input&lt;/label&gt;
-                                                            &lt;input type=&quot;file&quot; id=&quot;example-fileinput&quot; class=&quot;form-control-file&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-date&quot;&gt;Date&lt;/label&gt;
-                                                            &lt;input class=&quot;form-control&quot; id=&quot;example-date&quot; type=&quot;date&quot; name=&quot;date&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-month&quot;&gt;Month&lt;/label&gt;
-                                                            &lt;input class=&quot;form-control&quot; id=&quot;example-month&quot; type=&quot;month&quot; name=&quot;month&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-time&quot;&gt;Time&lt;/label&gt;
-                                                            &lt;input class=&quot;form-control&quot; id=&quot;example-time&quot; type=&quot;time&quot; name=&quot;time&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-week&quot;&gt;Week&lt;/label&gt;
-                                                            &lt;input class=&quot;form-control&quot; id=&quot;example-week&quot; type=&quot;week&quot; name=&quot;week&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-number&quot;&gt;Number&lt;/label&gt;
-                                                            &lt;input class=&quot;form-control&quot; id=&quot;example-number&quot; type=&quot;number&quot; name=&quot;number&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group&quot;&gt;
-                                                            &lt;label for=&quot;example-color&quot;&gt;Color&lt;/label&gt;
-                                                            &lt;input class=&quot;form-control&quot; id=&quot;example-color&quot; type=&quot;color&quot; name=&quot;color&quot; value=&quot;#727cf5&quot;&gt;
-                                                        &lt;/div&gt;
-
-                                                        &lt;div class=&quot;form-group mb-0&quot;&gt;
-                                                            &lt;label for=&quot;example-range&quot;&gt;Range&lt;/label&gt;
-                                                            &lt;input class=&quot;custom-range&quot; id=&quot;example-range&quot; type=&quot;range&quot; name=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot;&gt;
-                                                        &lt;/div&gt;
-                                                    </span>
-                                                </pre> <!-- end highlight-->
-                                    </div> <!-- end preview code-->
-                                </div> <!-- end tab-content-->
-
-                            </div> <!-- end card-body -->
-                        </div> <!-- end card -->
-                    </div><!-- end col -->
-                </div>
-                <!-- end row -->
-
-            </div> <!-- End Content -->
+        </div> <!-- End Content -->
 
 
-        </div> <!-- content-page -->
+    </div> <!-- content-page -->
 
-    </div> <!-- end wrapper-->
+</div> <!-- end wrapper-->
 </div>
 <!-- END Container -->
 
@@ -409,24 +147,84 @@
 <script src="assets/js/vendor.min.js"></script>
 <script src="assets/js/app.min.js"></script>
 <script>
-    const user = JSON.parse(localStorage.getItem('user'));
-    // {
-    //     "id": 2,
-    //     "name": "Nguyễn Vũ Mạnh Hà",
-    //     "email": "20130243@st.hcmuaf.edu.vn",
-    //     "phone": "0123456789",
-    //     "department": {
-    //     "departmentId": 1,
-    //         "name": "Finance",
-    //         "manager_id": 1
-    // },
-    //     "role": 0
-    // }
-    if(user !=null){
-        $("#userName").text(user.name);
-        $("#userEmail").text(user.email);
-        $("#userPosition").text("Employee")
-    }
+    $(document).ready(function () {
+
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        // {
+        //     "id": 2,
+        //     "name": "Nguyễn Vũ Mạnh Hà",
+        //     "email": "20130243@st.hcmuaf.edu.vn",
+        //     "phone": "0123456789",
+        //     "department": {
+        //     "departmentId": 1,
+        //         "name": "Finance",
+        //         "manager_id": 1
+        // },
+        //     "role": 0
+        // }
+        if (user != null) {
+            $("#userName").text(user.name);
+            $("#userEmail").text(user.email);
+            $("#userPosition").text("Employee")
+            $("#employeeId").val(user.id);
+        }
+
+        $('#expenseForm').on('submit', function (event) {
+            event.preventDefault();
+            if (checkInput() && checkFileSize()) {
+                var formData = new FormData(this);
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        $.NotificationApp.send("Success", "Request submitted successfully!", "top-right", "#5ba035", "success");
+                    },
+                    error: function () {
+                        $.NotificationApp.send("Error", "An error occurred. Please try again.", "top-right", "#bf441d", "error");
+                    }
+                });
+            }
+        });
+
+        function checkInput() {
+            const input = $('#amount').val();
+            const regex = /^[0-9]+$/;
+            if (regex.test(input) && input > 1000 && input <= 1000000000) {
+                $('#error-message').text('');
+                return true;
+            } else {
+                $('#error-message').text('Input must be a number between 1,000 and 1,000,000,000!');
+                return false;
+            }
+        }
+
+        function checkFileSize() {
+            const fileInput = $('#file')[0];
+            const file = fileInput.files[0];
+            const maxFileSize = 10 * 1024 * 1024; // 10MB
+            if (file && file.size > maxFileSize) {
+                $('#error-message-file').text('The file is too large, please choose a file smaller than 10MB.');
+                fileInput.value = '';
+                return false;
+            } else {
+                $('#error-message-file').text('');
+                return true;
+            }
+        }
+
+        $('#file').on('change', checkFileSize);
+        $('#amount').on('input', checkInput);
+
+        function logout() {
+            localStorage.removeItem("user");
+            window.location.href = "./login.html"
+        }
+
+    });
 
 </script>
 </body>
