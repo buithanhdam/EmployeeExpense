@@ -94,15 +94,16 @@
             success: function(response) {
 
                 localStorage.setItem("user",JSON.stringify(response));
-
+                window.location.href = "./home.html"
                 console.log(response);
-                if (response.role === 2){
 
-                }else if (response.role === 0){
-                    window.location.href = "./expense_request_personal.html"
-                }else{
-                    window.location.href = "./expense_request_group.html"
-                }
+                // if (response.role === 2){
+                //     window.location.href = "./home.html"
+                // }else if (response.role === 0){
+                //     window.location.href = "./home.html"
+                // }else{
+                //     window.location.href = "./home.html"
+                // }
 
             },
             error: function(xhr, status, error) {
