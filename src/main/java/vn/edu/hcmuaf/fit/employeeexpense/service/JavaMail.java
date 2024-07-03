@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.employeeexpense.Mail;
+package vn.edu.hcmuaf.fit.employeeexpense.service;
 
 
 import javax.mail.*;

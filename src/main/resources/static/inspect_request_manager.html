@@ -86,7 +86,7 @@
         if (id == null) {
             window.location.href = "/404.html";
         }
-        console.log(id);
+
         // Lấy thông tin người dùng từ localStorage
         var userData = JSON.parse(localStorage.getItem("user"));
         var userId = userData.id;
@@ -136,7 +136,7 @@
         $('#approve').click(function(e) {
             //e.preventDefault();
             var requestId = sessionStorage.getItem("requetsID");
-            var url = `http://localhost:8080/api/updateRequest/confirmRequest`;
+            var url = `http://localhost:8080/api/request/confirmRequest`;
             var data = { request_id: requestId, manager_id: userId };
             console.log("data",data);
             sendRequest(url, "POST", data, 'confirm');
@@ -147,7 +147,7 @@
             e.preventDefault();
             var requestId = sessionStorage.getItem("requetsID");
             var reason = $('textarea[name="reason"]').val();
-            var url = `http://localhost:8080/api/updateRequest/rejectRequest`;
+            var url = `http://localhost:8080/api/request/rejectRequest`;
             var data = { request_id: requestId, manager_id: userId, reason: reason };
             console.log(data);
             if (reason !== null || reason !== '' || reason.length >=1){

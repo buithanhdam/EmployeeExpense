@@ -2,13 +2,12 @@ package vn.edu.hcmuaf.fit.employeeexpense.Model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.sql.Timestamp;
+
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
-
 @Table(name = "expense_payment")
-
 @Data
 public class ExpensePayment implements Serializable {
     @Id
