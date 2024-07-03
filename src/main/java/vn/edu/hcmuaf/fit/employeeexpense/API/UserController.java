@@ -2,12 +2,11 @@ package vn.edu.hcmuaf.fit.employeeexpense.API;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.hcmuaf.fit.employeeexpense.Mail.JavaMail;
+import vn.edu.hcmuaf.fit.employeeexpense.DTO.UserDTO;
+import vn.edu.hcmuaf.fit.employeeexpense.service.JavaMail;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.Accountant;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.Employee;
 import vn.edu.hcmuaf.fit.employeeexpense.Repository.AccountantRepository;
@@ -17,7 +16,7 @@ import vn.edu.hcmuaf.fit.employeeexpense.service.OtpGenerator;
 @RestController
 @CrossOrigin(maxAge = 3600)
 @RequestMapping(value = "/api/user")
-public class User {
+public class UserController {
 
     @Autowired
     private AccountantRepository accountantRepository;

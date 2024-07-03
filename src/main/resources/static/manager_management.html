@@ -306,7 +306,7 @@
 
         // Gửi yêu cầu AJAX để lấy dữ liệu từ API
         $.ajax({
-            url: `http://localhost:8080/api/updateRequest/getSubmitRequests/${userId}`,
+            url: `http://localhost:8080/api/request/getSubmitRequests/${userId}`,
             type: 'GET',
             dataType: 'json',
             success: function(data) {
@@ -359,7 +359,7 @@
 
         // Gửi yêu cầu AJAX để lấy dữ liệu từ API
         $.ajax({
-            url: `http://localhost:8080/api/updateRequest/getConfirmRequests/${userId}`,
+            url: `http://localhost:8080/api/request/getConfirmRequests/${userId}`,
             type: 'GET',
             dataType: 'json',
             success: function(data) {

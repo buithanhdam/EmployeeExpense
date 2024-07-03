@@ -9,8 +9,6 @@ import java.io.Serializable;
 @Table(name = "department")
 @Data
 public class Department implements Serializable {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long departmentId;

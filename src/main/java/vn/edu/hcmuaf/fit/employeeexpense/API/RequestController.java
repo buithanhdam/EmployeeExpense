@@ -1,35 +1,52 @@
 package vn.edu.hcmuaf.fit.employeeexpense.API;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.*;
 import vn.edu.hcmuaf.fit.employeeexpense.Repository.*;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/updateRequest")
+@RequestMapping("/api/request")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ConfirmRequest {
-
+public class RequestController {
     @Autowired
     ExpenseRequestRepository expenseRequestRepository;
     @Autowired
     EmployeeRepository employeeRepository;
-
     @Autowired
     ExpenseApprovalRepository expenseApprovalRepository;
-
     @Autowired
     AccountantRepository accountantRepository;
-
     @Autowired
     ExpensePaymentRepository expensePaymentRepository;
+
+
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping("/getRequest/{id}")
+    public ResponseEntity<ExpenseRequest> getRequest(@PathVariable Long id) {
+        try {
+            ExpenseRequest expenseRequest = expenseRequestRepository.findByRequestId(id);
+            if (expenseRequest != null) {
+                return new ResponseEntity<>(expenseRequest, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/getSubmitRequests/{id}")
@@ -37,8 +54,7 @@ public class ConfirmRequest {
         try {
             List<ExpenseRequest> listR = getAllRequestByDepartment(id);
             List<ExpenseRequest> result = new LinkedList<>();
-            for (ExpenseRequest er :
-                    listR) {
+            for (ExpenseRequest er : listR) {
                 if (er.getStatus().equals("Submit")) result.add(er);
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -53,8 +69,7 @@ public class ConfirmRequest {
         try {
             List<ExpenseRequest> listR = getAllRequestByDepartment(id);
             List<ExpenseRequest> result = new LinkedList<>();
-            for (ExpenseRequest er :
-                    listR) {
+            for (ExpenseRequest er : listR) {
                 if (er.getStatus().equals("Confirm")) result.add(er);
                 if (er.getStatus().equals("Reject")) result.add(er);
             }
@@ -70,8 +85,7 @@ public class ConfirmRequest {
         try {
             List<ExpenseRequest> listR = getAllRequestByDepartment(id);
             List<ExpenseRequest> result = new LinkedList<>();
-            for (ExpenseRequest er :
-                    listR) {
+            for (ExpenseRequest er : listR) {
                 if (er.getStatus().equals("Reject")) result.add(er);
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -178,8 +192,6 @@ public class ConfirmRequest {
                         return new ResponseEntity<>(expenseRequest, HttpStatus.OK);
                     }
                 }
-
-
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
@@ -190,27 +202,68 @@ public class ConfirmRequest {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping("/create")
+    public String createRequest(@RequestParam("type") String type,
+                                @RequestParam("description") String description,
+                                @RequestParam("amount") float amount,
+                                @RequestParam("filename") MultipartFile file,
+                                @RequestParam("employee") String id) {
+        // Create ExpenseRequest object
+        Employee employee = employeeRepository.findByEmployeeId(Long.parseLong(id));
+        if (employee == null) {
+            return "redirect:http://localhost:63342/EmployeeExpense/static/login.html";
+        }
+
+        String filename = "";
+        if (!file.isEmpty()) {
+            try {
+                // Lưu file vào thư mục trên máy chủ
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get("src/main/resources/static/" + file.getOriginalFilename());
+                Files.write(path, bytes);
+
+                // Lấy đường dẫn tương đối của file
+                filename = "http://localhost:63342/EmployeeExpense/static/" + file.getOriginalFilename();
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
+
+        // Save ExpenseRequest
+        String status = "Submit";
+        if (employee.getIsManager() == 1) {
+            status = "Confirm";
+            ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()), employee, status);
+
+            expenseRequestRepository.save(expenseRequest);
+            ExpenseApproval expenseApproval = new ExpenseApproval();
+            expenseApproval.setExpenseRequest(expenseRequest);
+            expenseApproval.setApprovedAt(new Timestamp(new Date().getTime()));
+            expenseApproval.setEmployee(employee);
+            expenseApproval.setStatus("Confirm");
+            expenseApprovalRepository.save(expenseApproval);
+            return "redirect:http://localhost:63342/EmployeeExpense/static/manager_management.html"; // Redirect to a success page
+        } else {
+            ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()), employee, status);
+            expenseRequestRepository.save(expenseRequest);
+            return "redirect:http://localhost:63342/EmployeeExpense/static/expense_request_personal.html"; // Redirect to a success page
+        }
+    }
 
     public List<ExpenseRequest> getAllRequestByDepartment(Long managerID) {
         Employee currentEmployee = employeeRepository.findByEmployeeId(managerID);
         if (currentEmployee.getIsManager() == 1) {
             Department department = currentEmployee.getDepartment();
             List<Employee> employees = employeeRepository.findAllByDepartment(department);
-            List result = new LinkedList<ExpenseRequest>();
-            for (Employee e :
-                    employees) {
+            List<ExpenseRequest> result = new LinkedList<>();
+            for (Employee e : employees) {
                 List<ExpenseRequest> l = expenseRequestRepository.findAllByEmployee(e);
-                for (ExpenseRequest er :
-                        l) {
-                    result.add(er);
-                }
+                result.addAll(l);
             }
             return result;
         } else {
-            List<ExpenseRequest> l = expenseRequestRepository.findAllByEmployee(currentEmployee);
-            return l;
+            return expenseRequestRepository.findAllByEmployee(currentEmployee);
         }
     }
-
-
 }

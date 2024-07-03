@@ -25,6 +25,4 @@ public class ExpenseApproval implements Serializable {
     private String status;
     @Column(name = "rejection_reason")
     private String rejection_reason;
-
-
 }

@@ -5,13 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
-
 @Table(name = "expense_request")
-
 @Data
 public class ExpenseRequest implements Serializable {
     @Id
