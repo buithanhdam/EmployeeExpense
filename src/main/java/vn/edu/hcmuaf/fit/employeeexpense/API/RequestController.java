@@ -51,7 +51,7 @@ public class RequestController {
     @GetMapping("/getEmployeeHistoryRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getEmployeeHistoryRequests(@PathVariable Long id) {
         try {
-            List<ExpenseRequest> result = getAllRequestByDepartment(id);
+            List<ExpenseRequest> result = getAllRequestByEmployee(id);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -61,7 +61,7 @@ public class RequestController {
     @GetMapping("/getSubmitRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getRequetsOnSubmit(@PathVariable Long id) {
         try {
-            List<ExpenseRequest> listR = getAllRequestByDepartment(id);
+            List<ExpenseRequest> listR = getAllRequestByEmployee(id);
             List<ExpenseRequest> result = new LinkedList<>();
             for (ExpenseRequest er : listR) {
                 if (er.getStatus().equals("Submit")) result.add(er);
@@ -76,7 +76,7 @@ public class RequestController {
     @GetMapping("/getConfirmRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getRequetsOnConfirm(@PathVariable Long id) {
         try {
-            List<ExpenseRequest> listR = getAllRequestByDepartment(id);
+            List<ExpenseRequest> listR = getAllRequestByEmployee(id);
             List<ExpenseRequest> result = new LinkedList<>();
             for (ExpenseRequest er : listR) {
                 if (er.getStatus().equals("Confirm")) result.add(er);
@@ -92,7 +92,7 @@ public class RequestController {
     @GetMapping("/getRejectRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getRequetsOnReject(@PathVariable Long id) {
         try {
-            List<ExpenseRequest> listR = getAllRequestByDepartment(id);
+            List<ExpenseRequest> listR = getAllRequestByEmployee(id);
             List<ExpenseRequest> result = new LinkedList<>();
             for (ExpenseRequest er : listR) {
                 if (er.getStatus().equals("Reject")) result.add(er);
@@ -261,7 +261,7 @@ public class RequestController {
         }
     }
 
-    public List<ExpenseRequest> getAllRequestByDepartment(Long managerID) {
+    public List<ExpenseRequest> getAllRequestByEmployee(Long managerID) {
         Employee currentEmployee = employeeRepository.findByEmployeeId(managerID);
         if (currentEmployee.getIsManager() == 1) {
             Department department = currentEmployee.getDepartment();

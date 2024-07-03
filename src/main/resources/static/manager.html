@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Employee</title>
+    <title>Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -41,13 +41,13 @@
             <ul class="metismenu side-nav">
 
                 <li class="side-nav-item">
-                    <a href="employee.html" class="side-nav-link">
+                    <a href="manager.html" class="side-nav-link">
                         <i class="uil-home-alt"></i>
                         <span> Request </span>
                     </a>
                 </li>
                 <li class="side-nav-item">
-                    <a href="employeeHistory.html" class="side-nav-link">
+                    <a href="managerHistory.html" class="side-nav-link">
                         <i class="uil-history"></i>
                         <span>History Request</span>
                     </a>
@@ -85,11 +85,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">EXPENSE REQUEST FOR EMPLOYEE</h4>
+                                <h4 class="header-title">EXPENSE REQUEST FOR MANAGER</h4>
                                 <p class="text-muted font-14">
-                                    The "Expense Request for Employee" interface allows employees to submit expense
-                                    reimbursement requests, including details such as expense type, description, amount,
-                                    and attached receipts. This streamlines expense tracking and approval processes.
+                                    The "Expense Request for Manager" interface allows managers to review and approve or reject expense reimbursement requests submitted by employees. This includes verifying details such as expense type, description, amount, and attached receipts, streamlining the expense tracking and approval processes.
                                 </p>
 
                                 <div class="row">
@@ -98,7 +96,7 @@
                                               method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="type">Type</label>
-                                                <input type="text" id="type" name="type" value="PERSONAL"
+                                                <input type="text" id="type" name="type" value="GROUP"
                                                        class="form-control"
                                                        readonly>
                                             </div>
@@ -119,7 +117,7 @@
                                                 <input type="file" id="file" name="filename" class="form-control-file">
                                                 <span id="error-message-file" class="text-danger"></span>
                                             </div>
-                                            <input type="text" style="display: none" name="employee" id="employeeId">
+                                            <input type="text" style="display: none" name="employee" id="managerId">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </form>
                                         <div id="success-message" class="text-success"></div>
@@ -166,8 +164,8 @@
         if (user != null) {
             $("#userName").text(user.name);
             $("#userEmail").text(user.email);
-            $("#userPosition").text("Employee")
-            $("#employeeId").val(user.id);
+            $("#userPosition").text("Manager")
+            $("#managerId").val(user.id);
         }
 
         $('#expenseForm').on('submit', function (event) {
@@ -230,7 +228,7 @@
     } else {
         const user = JSON.parse(localStorage.getItem('user'));
         const role = user ? user.role : null;
-        if (role !== 0) {
+        if (role !== 1) {
             window.location.href = "./home.html";
         }
     }
