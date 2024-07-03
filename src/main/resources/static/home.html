@@ -11,7 +11,16 @@
 <script>
     if (localStorage.getItem("user") === null) {
         window.location.href = "./login.html";
+    } else {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const role = user ? user.role : null;
+        if (role === 0) {
+            window.location.href = "./employee.html";
+        } else if (role === 1) {
+            window.location.href = "./expense_request_group.html";
+        }
     }
+
     $("#logout").click(function () {
         localStorage.removeItem("user");
         window.location.href = "./login.html";
