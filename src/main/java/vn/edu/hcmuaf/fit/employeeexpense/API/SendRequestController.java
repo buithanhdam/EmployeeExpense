@@ -78,7 +78,7 @@ public class SendRequestController {
             expenseApproval.setEmployee(employee);
             expenseApproval.setStatus("Confirm");
             expenseApprovalRepository.save(expenseApproval);
-            return "redirect:http://localhost:63342/EmployeeExpense/static/expense_request_group.html"; // Redirect to a success page
+            return "redirect:http://localhost:63342/EmployeeExpense/static/manager_management.html"; // Redirect to a success page
         }else{
             ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()),employee, status);
             expenseRequestRepository.save(expenseRequest);
