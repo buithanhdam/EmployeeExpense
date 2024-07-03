@@ -1,0 +1,334 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="manager_management.css">
+    <title>Request Management</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<button id="logout">Logout</button>
+    <div class="container" style="display: flex;flex-direction: column;gap: 1rem">
+        <div class="demo">
+            <h1>REQUEST HISTORY</h1>
+            <div class="table-responsive-vertical shadow-z-1">
+                <!-- Table starts here -->
+                <table id="table" class="table table-hover table-mc-light-blue">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>File_attachment</th>
+                        <th>Amount</th>
+                        <th>Create by</th>
+                        <th>Create at</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td data-title="ID">1</td>
+                        <td data-title="Decription">Buy uitility for End Year Party</td>
+                        <td data-title="Link">
+                            <a href="https://i1-kinhdoanh.vnecdn.net/2022/04/01/img-2454-jpg-1648808215-3987-1648808403.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=gQS7uwJU16jFmbkmyTugPw" target="_blank">See file</a>
+
+                        </td>
+                        <td data-title="Amount">500000</td>
+                        <td data-title="Create by">Bùi Thanh Đảm</td>
+                        <td data-title="Create at">13:49 12/04/2024</td>
+                        <td data-title="Action">Approved
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    $(document).ready(function() {
+
+        var table1 = $('#table1');
+
+        // Table bordered
+        $('#table1-bordered').change(function() {
+            var value = $( this ).val();
+            table1.removeClass('table1-bordered').addClass(value);
+        });
+
+        // Table striped
+        $('#table1-striped').change(function() {
+            var value = $( this ).val();
+            table1.removeClass('table1-striped').addClass(value);
+        });
+
+        // Table hover
+        $('#table1-hover').change(function() {
+            var value = $( this ).val();
+            table1.removeClass('table1-hover').addClass(value);
+        });
+
+        // Table color
+        $('#table1-color').change(function() {
+            var value = $(this).val();
+            table1.removeClass(/^table-mc-/).addClass(value);
+        });
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkCells = document.querySelectorAll('td[data-title="Link"]');
+            const amountCells = document.querySelectorAll('td[data-title="Amount"]');
+
+            linkCells.forEach(function(cell) {
+                const links = cell.querySelectorAll('a');
+                if (links.length === 0) {
+                    cell.textContent = 'None';
+                }
+            });
+
+            amountCells.forEach(function(cell) {
+                const amount = cell.textContent;
+                const formattedAmount = formatAmount(amount);
+                cell.textContent = formattedAmount;
+            });
+
+            function formatAmount(amount) {
+                const thousandSeparator = ',';
+                const parts = amount.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+                return parts.join('.');
+            }
+        });
+    });
+
+    (function(removeClass) {
+
+        jQuery.fn.removeClass = function( value ) {
+            if ( value && typeof value.test === "function" ) {
+                for ( var i = 0, l = this.length; i < l; i++ ) {
+                    var elem = this[i];
+                    if ( elem.nodeType === 1 && elem.className ) {
+                        var classNames = elem.className.split( /\s+/ );
+
+                        for ( var n = classNames.length; n--; ) {
+                            if ( value.test(classNames[n]) ) {
+                                classNames.splice(n, 1);
+                            }
+                        }
+                        elem.className = jQuery.trim( classNames.join(" ") );
+                    }
+                }
+            } else {
+                removeClass.call(this, value);
+            }
+            return this;
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkCells = document.querySelectorAll('td[data-title="Link"]');
+            const amountCells = document.querySelectorAll('td[data-title="Amount"]');
+
+            linkCells.forEach(function(cell) {
+                const links = cell.querySelectorAll('a');
+                if (links.length === 0) {
+                    cell.textContent = 'None';
+                }
+            });
+
+            amountCells.forEach(function(cell) {
+                const amount = cell.textContent;
+                const formattedAmount = formatAmount(amount);
+                cell.textContent = formattedAmount;
+            });
+
+            function formatAmount(amount) {
+                const thousandSeparator = ',';
+                const parts = amount.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+                return parts.join('.');
+            }
+        });
+    })(jQuery.fn.removeClass);
+
+</script>
+<script>
+
+    $(document).ready(function() {
+
+        var table = $('#table');
+
+        // Table bordered
+        $('#table-bordered').change(function() {
+            var value = $( this ).val();
+            table.removeClass('table-bordered').addClass(value);
+        });
+
+        // Table striped
+        $('#table-striped').change(function() {
+            var value = $( this ).val();
+            table.removeClass('table-striped').addClass(value);
+        });
+
+        // Table hover
+        $('#table-hover').change(function() {
+            var value = $( this ).val();
+            table.removeClass('table-hover').addClass(value);
+        });
+
+        // Table color
+        $('#table-color').change(function() {
+            var value = $(this).val();
+            table.removeClass(/^table-mc-/).addClass(value);
+        });
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkCells = document.querySelectorAll('td[data-title="Link"]');
+            const amountCells = document.querySelectorAll('td[data-title="Amount"]');
+
+            linkCells.forEach(function(cell) {
+                const links = cell.querySelectorAll('a');
+                if (links.length === 0) {
+                    cell.textContent = 'None';
+                }
+            });
+
+            amountCells.forEach(function(cell) {
+                const amount = cell.textContent;
+                const formattedAmount = formatAmount(amount);
+                cell.textContent = formattedAmount;
+            });
+
+            function formatAmount(amount) {
+                const thousandSeparator = ',';
+                const parts = amount.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+                return parts.join('.');
+            }
+        });
+    });
+
+    // jQuery’s hasClass and removeClass on steroids
+    // by Nikita Vasilyev
+    // https://github.com/NV/jquery-regexp-classes
+    (function(removeClass) {
+
+        jQuery.fn.removeClass = function( value ) {
+            if ( value && typeof value.test === "function" ) {
+                for ( var i = 0, l = this.length; i < l; i++ ) {
+                    var elem = this[i];
+                    if ( elem.nodeType === 1 && elem.className ) {
+                        var classNames = elem.className.split( /\s+/ );
+
+                        for ( var n = classNames.length; n--; ) {
+                            if ( value.test(classNames[n]) ) {
+                                classNames.splice(n, 1);
+                            }
+                        }
+                        elem.className = jQuery.trim( classNames.join(" ") );
+                    }
+                }
+            } else {
+                removeClass.call(this, value);
+            }
+            return this;
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkCells = document.querySelectorAll('td[data-title="Link"]');
+            const amountCells = document.querySelectorAll('td[data-title="Amount"]');
+
+            linkCells.forEach(function(cell) {
+                const links = cell.querySelectorAll('a');
+                if (links.length === 0) {
+                    cell.textContent = 'None';
+                }
+            });
+
+            amountCells.forEach(function(cell) {
+                const amount = cell.textContent;
+                const formattedAmount = formatAmount(amount);
+                cell.textContent = formattedAmount;
+            });
+
+            function formatAmount(amount) {
+                const thousandSeparator = ',';
+                const parts = amount.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+                return parts.join('.');
+            }
+        });
+    })(jQuery.fn.removeClass);
+
+
+
+    $(document).ready(function() {
+        // Lấy thông tin người dùng từ localStorage
+        var userData = JSON.parse(localStorage.getItem("user"));
+        var userId = userData.id;
+
+        // Gửi yêu cầu AJAX để lấy dữ liệu từ API
+        $.ajax({
+            url: `http://localhost:8080/api/request/getEmployeeHistoryRequests/${userId}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                // Xử lý dữ liệu trả về từ API
+                var tableBody = $('#table tbody');
+                tableBody.empty(); // Xóa dữ liệu cũ trong bảng
+                data.sort(function(a, b) {
+                    // Sắp xếp theo timestamp giảm dần
+                    var timestampA = Date.parse(a.createdAt);
+                    var timestampB = Date.parse(b.createdAt);
+                    return timestampB - timestampA;
+                });
+                data.sort(function(a, b) {
+                    // Sắp xếp theo trạng thái từ A-Z
+                    var statusA = a.status.toUpperCase();
+                    var statusB = b.status.toUpperCase();
+                    if (statusA < statusB) {
+                        return -1;
+                    }
+                    if (statusA > statusB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+
+
+                $.each(data, function(index, item) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(item.requestId));
+                    row.append($('<td>').text(item.decription));
+
+                    if(item.fileAttachment){
+                        var fileLink = $('<a>').attr('href', item.fileAttachment).attr('target', '_blank').text('See file');
+                        var fileTd = $('<td>').append(fileLink)
+                        row.append(fileTd);
+
+                    }else{
+                        row.append($('<td>').append("none"));
+                    }
+
+                    row.append($('<td>').text(item.amount));
+                    row.append($('<td>').text(item.employee.name));
+                    row.append($('<td>').text(item.createdAt));
+                    row.append($('<td>').text(item.status));
+                    tableBody.append(row);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
+<script>
+
+    $("#logout").click(function () {
+        localStorage.removeItem("user");
+        window.location.href = "./login.html";
+    })
+</script>
+</html>

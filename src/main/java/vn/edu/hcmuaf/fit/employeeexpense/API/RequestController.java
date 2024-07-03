@@ -47,7 +47,16 @@ public class RequestController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
-
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping("/getEmployeeHistoryRequests/{id}")
+    public ResponseEntity<List<ExpenseRequest>> getEmployeeHistoryRequests(@PathVariable Long id) {
+        try {
+            List<ExpenseRequest> result = getAllRequestByDepartment(id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
     @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/getSubmitRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getRequetsOnSubmit(@PathVariable Long id) {
@@ -244,6 +253,7 @@ public class RequestController {
             expenseApproval.setStatus("Confirm");
             expenseApprovalRepository.save(expenseApproval);
             return "redirect:http://localhost:63342/EmployeeExpense/static/manager_management.html"; // Redirect to a success page
+
         } else {
             ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()), employee, status);
             expenseRequestRepository.save(expenseRequest);
