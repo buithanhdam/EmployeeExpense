@@ -47,6 +47,7 @@ public class RequestController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
     @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/getEmployeeHistoryRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getEmployeeHistoryRequests(@PathVariable Long id) {
@@ -57,6 +58,7 @@ public class RequestController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
     @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/getSubmitRequests/{id}")
     public ResponseEntity<List<ExpenseRequest>> getRequetsOnSubmit(@PathVariable Long id) {
@@ -107,33 +109,39 @@ public class RequestController {
     @PostMapping("/confirmRequest")
     public ResponseEntity<ExpenseRequest> confirmRequest(@RequestParam Long request_id, @RequestParam Long manager_id) {
         try {
+            System.out.println("Request ID: " + request_id);
+            System.out.println("Manager ID: " + manager_id);
             ExpenseRequest expenseRequest = expenseRequestRepository.findByRequestId(request_id);
             if (expenseRequest != null) {
                 Department department = expenseRequest.getEmployee().getDepartment();
-                if (department.getManager_id() == manager_id) {
-                    if (expenseRequest.getStatus().equals("Submit")) {
-                        expenseRequest.setStatus("Confirm");
-                        expenseRequestRepository.save(expenseRequest);
+//                if (department.getManager_id() == manager_id) {
+                if (expenseRequest.getStatus().equals("Submit")) {
+                    expenseRequest.setStatus("Confirm");
+                    expenseRequestRepository.save(expenseRequest);
 
-                        ExpenseApproval expenseApproval = new ExpenseApproval();
-                        expenseApproval.setExpenseRequest(expenseRequest);
-                        expenseApproval.setStatus("Confirm");
-                        expenseApproval.setApprovedAt(new Timestamp(new Date().getTime()));
-                        expenseApproval.setEmployee(employeeRepository.findByEmployeeId(manager_id));
-                        expenseApprovalRepository.save(expenseApproval);
+                    ExpenseApproval expenseApproval = new ExpenseApproval();
+                    expenseApproval.setExpenseRequest(expenseRequest);
+                    expenseApproval.setStatus("Confirm");
+                    expenseApproval.setApprovedAt(new Timestamp(new Date().getTime()));
+                    expenseApproval.setEmployee(employeeRepository.findByEmployeeId(manager_id));
+                    expenseApprovalRepository.save(expenseApproval);
 
-                        return new ResponseEntity<>(expenseRequest, HttpStatus.OK);
-                    }
+                    return new ResponseEntity<>(expenseRequest, HttpStatus.OK);
                 }
+//                } else {
+//                    System.out.println("Manager ID does not match");
+//                }
             } else {
+                System.out.println("ExpenseRequest not found");
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println("Exception: " + e.toString());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
+
 
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping("/approveRequest")
@@ -181,7 +189,7 @@ public class RequestController {
             ExpenseRequest expenseRequest = expenseRequestRepository.findByRequestId(request_id);
             if (expenseRequest != null) {
                 Department department = expenseRequest.getEmployee().getDepartment();
-                if (department.getManager_id() == manager_id) {
+//                if (department.getManager_id() == manager_id) {
                     if (!expenseRequest.getStatus().equals("Approve")) {
                         expenseRequest.setStatus("Reject");
                         expenseRequest.setRejection_reason(reason);
@@ -200,7 +208,7 @@ public class RequestController {
 
                         return new ResponseEntity<>(expenseRequest, HttpStatus.OK);
                     }
-                }
+//                }
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
@@ -229,11 +237,11 @@ public class RequestController {
             try {
                 // Lưu file vào thư mục trên máy chủ
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get("src/main/resources/static/" + file.getOriginalFilename());
+                Path path = Paths.get("src/main/resources/static/data/" + file.getOriginalFilename());
                 Files.write(path, bytes);
 
                 // Lấy đường dẫn tương đối của file
-                filename = "http://localhost:63342/EmployeeExpense/static/" + file.getOriginalFilename();
+                filename = "http://localhost:63342/EmployeeExpense/static/data/" + file.getOriginalFilename();
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
@@ -295,7 +303,7 @@ public class RequestController {
 
     @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/historyAccountant")
-    public ResponseEntity<List<ExpenseRequest>> getAllRequestByAccountId(@RequestParam("id") Long id ) {
+    public ResponseEntity<List<ExpenseRequest>> getAllRequestByAccountId(@RequestParam("id") Long id) {
         try {
             List<ExpensePayment> listR = expensePaymentRepository.findAllByAccountant(accountantRepository.findByAccountantId(id));
             List<ExpenseRequest> result = new LinkedList<>();
@@ -315,7 +323,7 @@ public class RequestController {
             ExpenseRequest expenseRequest = expenseRequestRepository.findByRequestId(request_id);
             if (expenseRequest != null) {
                 Accountant accountant = accountantRepository.findByAccountantId(manager_id);
-                if(accountant != null){
+                if (accountant != null) {
                     if (!expenseRequest.getStatus().equals("Approve")) {
                         expenseRequest.setStatus("Reject");
                         expenseRequest.setRejection_reason(reason);

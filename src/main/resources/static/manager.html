@@ -28,12 +28,13 @@
 
             <div class="leftbar-user">
                 <div class="col">
-                <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42"
-                class="rounded-circle shadow-sm">
-                <span class="leftbar-user-name" id="userName">abc</span>
-                <span class="text-muted" id="userEmail">abc</span>
-                <span class="text-info font-weight-bold" id="userPosition">abc</span>
-                </div>     <button class="btn btn-danger" id="logout" onclick="logout()">Log out</button>
+                    <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42"
+                         class="rounded-circle shadow-sm">
+                    <span class="leftbar-user-name" id="userName">abc</span>
+                    <span class="text-muted" id="userEmail">abc</span>
+                    <span class="text-info font-weight-bold" id="userPosition">abc</span>
+                </div>
+                <button class="btn btn-danger" id="logout" onclick="logout()">Log out</button>
 
             </div>
 
@@ -44,6 +45,12 @@
                     <a href="manager.html" class="side-nav-link">
                         <i class="uil-home-alt"></i>
                         <span> Request </span>
+                    </a>
+                </li>
+                <li class="side-nav-item">
+                    <a href="managerInspectation.html" class="side-nav-link">
+                        <i class="uil-history"></i>
+                        <span> Request Inspectation</span>
                     </a>
                 </li>
                 <li class="side-nav-item">
@@ -87,7 +94,10 @@
                             <div class="card-body">
                                 <h4 class="header-title">EXPENSE REQUEST FOR MANAGER</h4>
                                 <p class="text-muted font-14">
-                                    The "Expense Request for Manager" interface allows managers to review and approve or reject expense reimbursement requests submitted by employees. This includes verifying details such as expense type, description, amount, and attached receipts, streamlining the expense tracking and approval processes.
+                                    The "Expense Request for Manager" interface allows managers to review and approve or
+                                    reject expense reimbursement requests submitted by employees. This includes
+                                    verifying details such as expense type, description, amount, and attached receipts,
+                                    streamlining the expense tracking and approval processes.
                                 </p>
 
                                 <div class="row">
@@ -149,18 +159,6 @@
 
 
         const user = JSON.parse(localStorage.getItem('user'));
-        // {
-        //     "id": 2,
-        //     "name": "Nguyễn Vũ Mạnh Hà",
-        //     "email": "20130243@st.hcmuaf.edu.vn",
-        //     "phone": "0123456789",
-        //     "department": {
-        //     "departmentId": 1,
-        //         "name": "Finance",
-        //         "manager_id": 1
-        // },
-        //     "role": 0
-        // }
         if (user != null) {
             $("#userName").text(user.name);
             $("#userEmail").text(user.email);
@@ -217,12 +215,14 @@
         $('#file').on('change', checkFileSize);
         $('#amount').on('input', checkInput);
 
-        function logout() {
-            localStorage.removeItem("user");
-            window.location.href = "./login.html"
-        }
 
     });
+
+    function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "./login.html"
+    }
+
     if (localStorage.getItem("user") === null) {
         window.location.href = "./login.html";
     } else {
