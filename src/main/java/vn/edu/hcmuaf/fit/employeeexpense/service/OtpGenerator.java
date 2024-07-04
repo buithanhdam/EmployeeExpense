@@ -6,24 +6,16 @@ import java.util.Random;
 
 @Service
 public class OtpGenerator {
-    private int len = 8;
 
-    public String createOtp(){
-        String result = "";
+    public String createOtp() {
+        StringBuilder result = new StringBuilder();
         String numbers = "0123456789";
-        String Small_chars = "abcdefghijklmnopqrstuvwxyz";
-        String numChar = numbers + Small_chars;
         Random rd = new Random();
-        //String [] otp = new String[len];
 
-        for (int i = 0; i < len; i++)
-        {
-            // Use of charAt() method : to get character value
-            //otp[i] = numbers.charAt(rd.nextInt(numbers.length()));
-            result += numChar.charAt(rd.nextInt(numChar.length()-1)) + "";
-
+        for (int i = 0; i < 6; i++) {
+            result.append(numbers.charAt(rd.nextInt(numbers.length() - 1)));
         }
 
-        return result;
+        return result.toString();
     }
 }

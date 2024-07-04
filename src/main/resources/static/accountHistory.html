@@ -45,15 +45,14 @@
 
             <!--- Sidemenu -->
             <ul class="metismenu side-nav">
-
                 <li class="side-nav-item">
-                    <a href="employee.html" class="side-nav-link">
+                    <a href="account.html" class="side-nav-link">
                         <i class="uil-home-alt"></i>
                         <span> Request </span>
                     </a>
                 </li>
                 <li class="side-nav-item">
-                    <a href="employeeHistory.html" class="side-nav-link">
+                    <a href="accountHistory.html" class="side-nav-link">
                         <i class="uil-history"></i>
                         <span>History Request</span>
                     </a>
@@ -134,32 +133,18 @@
 <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
 <script>
     $(document).ready(function () {
-
-
         const user = JSON.parse(localStorage.getItem('user'));
-        // {
-        //     "id": 2,
-        //     "name": "Nguyễn Vũ Mạnh Hà",
-        //     "email": "20130243@st.hcmuaf.edu.vn",
-        //     "phone": "0123456789",
-        //     "department": {
-        //     "departmentId": 1,
-        //         "name": "Finance",
-        //         "manager_id": 1
-        // },
-        //     "role": 0
-        // }
+
         if (user != null) {
             $("#userName").text(user.name);
             $("#userEmail").text(user.email);
-            $("#userPosition").text("Employee")
-            $("#employeeId").val(user.id);
+            $("#userPosition").text("Account")
         }
 
 
         // Fetch the data from the API
         $.ajax({
-            url: `http://localhost:8080/api/request/getEmployeeHistoryRequests/${user.id}`,
+            url: `http://localhost:8080/api/request/historyAccountant?id=${user.id}`,
             method: 'GET',
             success: function (data) {
                 // Initialize the DataTable
@@ -211,7 +196,7 @@
     } else {
         const user = JSON.parse(localStorage.getItem('user'));
         const role = user ? user.role : null;
-        if (role !== 0) {
+        if (role !== 2) {
             window.location.href = "./home.html";
         }
     }

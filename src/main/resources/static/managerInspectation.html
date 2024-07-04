@@ -2,35 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Trang chủ</title>
+    <title>Manager Inspect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-
     <link href="assets/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/vendor/responsive.bootstrap4.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/vendor/buttons.bootstrap4.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/vendor/select.bootstrap4.css" rel="stylesheet" type="text/css"/>
-    <!-- App css -->
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style"/>
     <link href="assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style"/>
-
 </head>
-
 <body class="loading" data-layout="detached"
       data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": false}'>
-
-<!-- Start Content-->
 <div class="container-fluid">
-
-    <!-- Begin page -->
     <div class="wrapper">
-
-        <!-- ========== Left Sidebar Start ========== -->
         <div class="left-side-menu left-side-menu-detached">
-
             <div class="leftbar-user">
                 <div class="col">
                     <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42"
@@ -40,12 +28,8 @@
                     <span class="text-info font-weight-bold" id="userPosition">abc</span>
                 </div>
                 <button class="btn btn-danger" id="logout" onclick="logout()">Log out</button>
-
             </div>
-
-            <!--- Sidemenu -->
             <ul class="metismenu side-nav">
-
                 <li class="side-nav-item">
                     <a href="manager.html" class="side-nav-link">
                         <i class="uil-home-alt"></i>
@@ -55,7 +39,7 @@
                 <li class="side-nav-item">
                     <a href="managerInspectation.html" class="side-nav-link">
                         <i class="uil-history"></i>
-                        <span> Request Inspectation</span>
+                        <span>Request Inspectation </span>
                     </a>
                 </li>
                 <li class="side-nav-item">
@@ -65,40 +49,25 @@
                     </a>
                 </li>
             </ul>
-
-
             <div class="clearfix"></div>
-            <!-- Sidebar -left -->
-
         </div>
-        <!-- Left Sidebar End -->
-
         <div class="content-page">
             <div class="content">
-
-                <!-- start page title -->
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box">
                             <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <!--                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>-->
-                                    <!--                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>-->
-                                    <!--                                    <li class="breadcrumb-item active">Form Elements</li>-->
-                                </ol>
+                                <ol class="breadcrumb m-0"></ol>
                             </div>
-                            <!--                            <h4 class="page-title">Form Elements</h4>-->
                         </div>
                     </div>
                 </div>
-                <!-- end page title -->
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title">EXPENSE REQUEST HISTORY</h4>
-                                <table id="expenseTable" class="table table-centered w-100 dt-responsive "
+                                <table id="expenseTable" class="table table-centered w-100 dt-responsive"
                                        style="wid100%">
                                     <thead>
                                     <tr>
@@ -109,30 +78,56 @@
                                         <th>File Attachment</th>
                                         <th>Created At</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <!-- Data will be populated here dynamically -->
                                     </tbody>
                                 </table>
                             </div>
-                        </div> <!-- end card-body -->
-                    </div> <!-- end card -->
-                </div><!-- end col -->
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- end row -->
-
-        </div> <!-- End Content -->
-
-
-    </div> <!-- content-page -->
-
-</div> <!-- end wrapper-->
+        </div>
+    </div>
 </div>
-<!-- END Container -->
 
+<div id="top-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title" id="topModalLabel">Request Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>ID:</strong> <span id="modalRequestId"></span></p>
+                <p><strong>Type:</strong> <span id="modalType"></span></p>
+                <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+                <p><strong>Amount:</strong> <span id="modalAmount"></span></p>
+                <p><strong>File Attachment:</strong> <span id="modalFileAttachment"></span></p>
+                <p><strong>Created At:</strong> <span id="modalCreatedAt"></span></p>
+                <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+                <hr>
+                <p><strong>Employee Name:</strong> <span id="modalEmployeeName"></span></p>
+                <p><strong>Employee Email:</strong> <span id="modalEmployeeEmail"></span></p>
+                <p><strong>Employee Phone:</strong> <span id="modalEmployeePhone"></span></p>
+                <p><strong>Employee Department:</strong> <span id="modalEmployeeDepartment"></span></p>
+                <p><strong>Employee Position:</strong> <span id="modalEmployeePosition"></span></p>
+                <div class="form-group">
+                    <label for="reason">Reason</label>
+                    <textarea name="reason" id="reason" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="approve" class="btn btn-primary">Confirm</button>
+                <button type="button" id="reject" class="btn btn-danger">Reject</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<!-- bundle -->
 <script src="assets/js/vendor.min.js"></script>
 <script src="assets/js/app.min.js"></script>
 <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
@@ -145,16 +140,13 @@
         if (user != null) {
             $("#userName").text(user.name);
             $("#userEmail").text(user.email);
-            $("#userPosition").text("Manager")
+            $("#userPosition").text("Manager");
         }
 
-
-        // Fetch the data from the API
         $.ajax({
-            url: `http://localhost:8080/api/request/getConfirmRequests/${user.id}`,
+            url: `http://localhost:8080/api/request/getSubmitRequests/${user.id}`,
             method: 'GET',
             success: function (data) {
-                // Initialize the DataTable
                 $('#expenseTable').DataTable({
                     data: data,
                     columns: [
@@ -174,36 +166,99 @@
                                 return new Date(data).toLocaleString();
                             }
                         },
-                        {data: 'status'}
+                        {data: 'status'},
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-primary inspect-button" data-id="${row.requestId}">Inspect</button>`;
+                            }
+                        }
                     ],
                     language: {
                         paginate: {
                             previous: "<i class='mdi mdi-chevron-left'>",
                             next: "<i class='mdi mdi-chevron-right'>"
                         }
-                    }, drawCallback: function () {
+                    },
+                    drawCallback: function () {
                         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
                     }
                 });
+
+                $('#expenseTable tbody').on('click', 'button.inspect-button', function () {
+                    const requestId = $(this).data('id');
+                    const request = data.find(item => item.requestId === requestId);
+
+                    $('#modalRequestId').text(request.requestId);
+                    $('#modalType').text(request.type);
+                    $('#modalDescription').text(request.decription);
+                    $('#modalAmount').text(request.amount);
+                    $('#modalFileAttachment').html(request.fileAttachment ? `<a href="${request.fileAttachment}" target="_blank">View Attachment</a>` : 'No Attachment');
+                    $('#modalCreatedAt').text(new Date(request.createdAt).toLocaleString());
+                    $('#modalStatus').text(request.status);
+                    $('#modalEmployeeName').text(request.employee.name);
+                    $('#modalEmployeeEmail').text(request.employee.email);
+                    $('#modalEmployeePhone').text(request.employee.phone);
+                    $('#modalEmployeeDepartment').text(request.employee.department.name);
+                    $('#modalEmployeePosition').text(request.employee.isManager ? 'Manager' : 'Employee');
+
+                    $('#top-modal').modal('show');
+                });
+
+                $('#approve').click(function () {
+                    const requestId = $('#modalRequestId').text();
+                    const userId = user.id;
+                    const url = `http://localhost:8080/api/request/confirmRequest`;
+                    const data = {request_id: requestId, manager_id: userId};
+                    sendRequest(url, "POST", data, 'confirm');
+                });
+
+                $('#reject').click(function () {
+                    const requestId = $('#modalRequestId').text();
+                    const userId = user.id;
+                    const reason = $('#reason').val();
+                    if (reason) {
+                        const url = `http://localhost:8080/api/request/rejectRequest`;
+                        const data = {request_id: requestId, manager_id: userId, reason: reason};
+                        sendRequest(url, "POST", data, 'reject');
+                    } else {
+                        alert("Please provide a reason for rejection.");
+                    }
+                });
+
+                function sendRequest(url, method, data, action) {
+                    $.ajax({
+                        url: url,
+                        type: method,
+                        data: data,
+                        success: function (response) {
+                            alert(action === 'confirm' ? "Request confirmed successfully!" : "Request rejected successfully!");
+                            $('#top-modal').modal('hide');
+                            window.location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            alert("An error occurred. Please try again.");
+                            console.log("Error:", error);
+                        }
+                    });
+                }
             },
             error: function () {
                 $.NotificationApp.send("Error", "Failed to fetch data. Please try again.", "top-right", "#bf441d", "error");
             }
         });
-
     });
 
     function logout() {
         localStorage.removeItem("user");
-        window.location.href = "./login.html"
+        window.location.href = "./login.html";
     }
 
-    if (localStorage.getItem("user") === null) {
+    if (!localStorage.getItem("user")) {
         window.location.href = "./login.html";
     } else {
         const user = JSON.parse(localStorage.getItem('user'));
-        const role = user ? user.role : null;
-        if (role !== 1) {
+        if (user.role !== 1) {
             window.location.href = "./home.html";
         }
     }
