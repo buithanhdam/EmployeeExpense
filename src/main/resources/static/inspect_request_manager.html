@@ -65,6 +65,7 @@
 
 
 <script>
+
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
@@ -90,6 +91,9 @@
         // Lấy thông tin người dùng từ localStorage
         var userData = JSON.parse(localStorage.getItem("user"));
         var userId = userData.id;
+        if(userData.role === 2){
+            $("#approve").text("Approve");
+        }
         console.log(id);
 
         // Gửi yêu cầu AJAX để lấy dữ liệu từ API
@@ -135,11 +139,20 @@
         // Xử lý sự kiện click cho nút Approve
         $('#approve').click(function(e) {
             //e.preventDefault();
-            var requestId = sessionStorage.getItem("requetsID");
-            var url = `http://localhost:8080/api/request/confirmRequest`;
-            var data = { request_id: requestId, manager_id: userId };
-            console.log("data",data);
-            sendRequest(url, "POST", data, 'confirm');
+            if(userData.role === 2){
+                var requestId = sessionStorage.getItem("requetsID");
+                var url = `http://localhost:8080/api/request/approveRequest`;
+                var data = { request_id: requestId, manager_id: userId };
+                console.log("data",data);
+                sendRequest(url, "POST", data, 'approve');
+            } else {
+                var requestId = sessionStorage.getItem("requetsID");
+                var url = `http://localhost:8080/api/request/confirmRequest`;
+                var data = { request_id: requestId, manager_id: userId };
+                console.log("data",data);
+                sendRequest(url, "POST", data, 'confirm');
+            }
+
         });
 
         // Xử lý sự kiện click cho nút Reject
@@ -147,10 +160,10 @@
             e.preventDefault();
             var requestId = sessionStorage.getItem("requetsID");
             var reason = $('textarea[name="reason"]').val();
-            var url = `http://localhost:8080/api/request/rejectRequest`;
+            var url = userData.role===2?`http://localhost:8080/api/request/accRejectRequest`:`http://localhost:8080/api/request/rejectRequest`;
             var data = { request_id: requestId, manager_id: userId, reason: reason };
-            console.log(data);
-            if (reason !== null || reason !== '' || reason.length >=1){
+            console.log("reason",reason);
+            if (reason !== ""){
                 sendRequest(url, "POST", data, 'reject');
             }else{
                 alert("bạn cần nhập lý do để reject 1 yêu cầu!!");
@@ -171,9 +184,16 @@
                         console.log("Request confirmed successfully!");
                     } else if (action === 'reject') {
                         console.log("Request rejected successfully!");
+                    } else if (action === 'approve'){
+                        console.log("Request approve successfully!");
                     }
                     alert("success!");
-                    window.location.href = "./manager_management.html";
+                    if(userData.role === 2){
+                        window.location.href = "./account_management.html";
+                    } else {
+                        window.location.href = "./manager_management.html";
+                    }
+
                 },
                 error: function(xhr, status, error) {
                     alert("error!");
