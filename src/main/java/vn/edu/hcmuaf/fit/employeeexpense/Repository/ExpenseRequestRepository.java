@@ -16,6 +16,6 @@ public interface ExpenseRequestRepository extends JpaRepository<ExpenseRequest, 
     ExpenseRequest findByRequestId(Long id);
 
 
-
+    List<ExpenseRequest> findAllBy();
 
 }

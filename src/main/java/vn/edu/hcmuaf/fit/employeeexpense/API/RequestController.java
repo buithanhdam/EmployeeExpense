@@ -276,4 +276,74 @@ public class RequestController {
             return expenseRequestRepository.findAllByEmployee(currentEmployee);
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping("/getAllSubmitRequests")
+    public ResponseEntity<List<ExpenseRequest>> getAllConfirmRequest() {
+        try {
+            List<ExpenseRequest> listR = expenseRequestRepository.findAllBy();
+            List<ExpenseRequest> result = new LinkedList<>();
+            for (ExpenseRequest er : listR) {
+                if (er.getStatus().equals("Confirm")) result.add(er);
+                //if (er.getStatus().equals("Reject")) result.add(er);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping("/historyAccountant")
+    public ResponseEntity<List<ExpenseRequest>> getAllRequestByAccountId(@RequestParam("id") Long id ) {
+        try {
+            List<ExpensePayment> listR = expensePaymentRepository.findAllByAccountant(accountantRepository.findByAccountantId(id));
+            List<ExpenseRequest> result = new LinkedList<>();
+            for (ExpensePayment er : listR) {
+                result.add(er.getExpenseRequest());
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping("/accRejectRequest")
+    public ResponseEntity<ExpenseRequest> accRejectRequest(@RequestParam Long request_id, @RequestParam Long manager_id, @RequestParam String reason) {
+        try {
+            ExpenseRequest expenseRequest = expenseRequestRepository.findByRequestId(request_id);
+            if (expenseRequest != null) {
+                Accountant accountant = accountantRepository.findByAccountantId(manager_id);
+                if(accountant != null){
+                    if (!expenseRequest.getStatus().equals("Approve")) {
+                        expenseRequest.setStatus("Reject");
+                        expenseRequest.setRejection_reason(reason);
+                        expenseRequestRepository.save(expenseRequest);
+
+                        ExpensePayment expensePayment = expensePaymentRepository.findByExpenseRequest(expenseRequest);
+                        if (expensePayment == null) {
+                            expensePayment = new ExpensePayment();
+                            expensePayment.setExpenseRequest(expenseRequest);
+                            expensePayment.setAccountant(accountant);
+                            expensePayment.setPaidAt(new Timestamp(new Date().getTime()));
+                        } else {
+                            expensePayment.setAccountant(accountant);
+                            expensePayment.setPaidAt(new Timestamp(new Date().getTime()));
+                        }
+
+                        expensePaymentRepository.save(expensePayment);
+                        return new ResponseEntity<>(expenseRequest, HttpStatus.OK);
+                    }
+                }
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+
 }
