@@ -9,7 +9,7 @@ public class OtpGenerator {
 
     public String createOtp() {
         StringBuilder result = new StringBuilder();
-        String numbers = "0123456789";
+        String numbers = "0123456789876543210";
         Random rd = new Random();
 
         for (int i = 0; i < 6; i++) {

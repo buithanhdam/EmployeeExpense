@@ -219,18 +219,20 @@
         $('#file').on('change', checkFileSize);
         $('#amount').on('input', checkInput);
 
-        function logout() {
-            localStorage.removeItem("user");
-            window.location.href = "./login.html"
-        }
+
 
     });
+    function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "./login.html"
+    }
     if (localStorage.getItem("user") === null) {
         window.location.href = "./login.html";
     } else {
         const user = JSON.parse(localStorage.getItem('user'));
         const role = user ? user.role : null;
         if (role !== 0) {
+            alert("You dont have permission to access this page!!");
             window.location.href = "./home.html";
         }
     }

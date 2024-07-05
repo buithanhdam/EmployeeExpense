@@ -229,6 +229,7 @@
         const user = JSON.parse(localStorage.getItem('user'));
         const role = user ? user.role : null;
         if (role !== 1) {
+            alert("You dont have permission to access this page!!");
             window.location.href = "./home.html";
         }
     }

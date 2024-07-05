@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.employeeexpense.API;
 
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import vn.edu.hcmuaf.fit.employeeexpense.Model.*;
 import vn.edu.hcmuaf.fit.employeeexpense.Repository.*;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -225,7 +227,8 @@ public class RequestController {
                                 @RequestParam("description") String description,
                                 @RequestParam("amount") float amount,
                                 @RequestParam("filename") MultipartFile file,
-                                @RequestParam("employee") String id) {
+                                @RequestParam("employee") String id,
+                                HttpServletResponse httpResponse){
         // Create ExpenseRequest object
         Employee employee = employeeRepository.findByEmployeeId(Long.parseLong(id));
         if (employee == null) {
@@ -248,6 +251,7 @@ public class RequestController {
         }
 
         // Save ExpenseRequest
+
         String status = "Submit";
         if (employee.getIsManager() == 1) {
             status = "Confirm";
@@ -260,13 +264,13 @@ public class RequestController {
             expenseApproval.setEmployee(employee);
             expenseApproval.setStatus("Confirm");
             expenseApprovalRepository.save(expenseApproval);
-            return "redirect:http://localhost:63342/EmployeeExpense/static/manager_management.html"; // Redirect to a success page
-
+             return "employeeHistory.html";
         } else {
             ExpenseRequest expenseRequest = new ExpenseRequest(type, description, amount, filename, new Timestamp(System.currentTimeMillis()), employee, status);
             expenseRequestRepository.save(expenseRequest);
-            return "redirect:http://localhost:63342/EmployeeExpense/static/expense_request_personal.html"; // Redirect to a success page
+            return "managerHistory.html";
         }
+
     }
 
     public List<ExpenseRequest> getAllRequestByEmployee(Long managerID) {

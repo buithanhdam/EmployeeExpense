@@ -68,7 +68,7 @@
                             <div class="card-body">
                                 <h4 class="header-title">EXPENSE REQUEST HISTORY</h4>
                                 <table id="expenseTable" class="table table-centered w-100 dt-responsive"
-                                       style="wid100%">
+                                       style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
@@ -147,6 +147,13 @@
             url: `http://localhost:8080/api/request/getSubmitRequests/${user.id}`,
             method: 'GET',
             success: function (data) {
+                data.sort(function(a, b) {
+                    // Sắp xếp theo timestamp giảm dần
+
+                    var timestampA = Date.parse(a.createdAt);
+                    var timestampB = Date.parse(b.createdAt);
+                    return timestampA - timestampB;
+                });
                 $('#expenseTable').DataTable({
                     data: data,
                     columns: [
@@ -259,6 +266,7 @@
     } else {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user.role !== 1) {
+            alert("You dont have permission to access this page!!");
             window.location.href = "./home.html";
         }
     }
